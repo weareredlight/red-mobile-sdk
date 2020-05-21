@@ -1,0 +1,16 @@
+{
+  "name": "components",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
+    "react-native": "^0.62.2"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
+    "react-native": "^0.62.2"
+  }
+}
