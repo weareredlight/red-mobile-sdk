@@ -19,14 +19,23 @@ const ComponentDetails = ({
 }) => {
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
+  const [showIterations, setShowIterations] = useState(false)
+
+  const onIterations = useCallback(() => {
+    setShowIterations(!showIterations)
+    setShowStyles(false)
+    setShowProps(false)
+  }, [showIterations])
 
   const onProps = useCallback(() => {
     setShowProps(!showProps)
+    setShowIterations(false)
     setShowStyles(false)
   }, [showProps])
 
   const onStyles = useCallback(() => {
     setShowStyles(!showStyles)
+    setShowIterations(false)
     setShowProps(false)
   }, [showStyles])
 
@@ -37,15 +46,33 @@ const ComponentDetails = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          {component.name}
-        </Text>
-        <View style={styles.buttonsWrapper}>
-          <Button title="Props" onPress={onProps} />
-          <Button title="Styles" onPress={onStyles} />
-        </View>
+      <Text style={styles.title}>
+        {component.name}
+      </Text>
+
+      <View style={styles.section}>
+        {renderComponent(component, defaultProps, propTypes, defaultProps)}
       </View>
+
+      <View style={styles.buttonsWrapper}>
+        <Button title="Props" onPress={onProps} />
+        <Button title="Styles" onPress={onStyles} />
+        <Button title="Iterations" onPress={onIterations} />
+      </View>
+
+      {showIterations && (
+        <View style={styles.section}>
+          {iterations.map((iteration, index) => {
+            const finalProps = merge({}, defaultProps, iteration)
+            return (
+              <View key={index}>
+                {index !== 0 && <View style={styles.sectionSpacer} />}
+                {renderComponent(component, finalProps, propTypes, iteration)}
+              </View>
+            )
+          })}
+        </View>
+      )}
 
       {showProps &&
         <View style={styles.section}>
@@ -58,27 +85,16 @@ const ComponentDetails = ({
           {renderStyles(style)}
         </View>
       }
-
-      <View style={styles.section}>
-        <Text style={styles.componentTitle}>
-          Default:
-        </Text>
-        {renderComponent(-1, component, defaultProps, propTypes, defaultProps)}
-        <Text style={styles.componentTitle}>
-          Iterations:
-        </Text>
-        {iterations.map((iteration, index) => {
-          const finalProps = merge({}, defaultProps, iteration)
-          return renderComponent(index, component, finalProps, propTypes, iteration)
-        })}
-      </View>
     </View>
   )
 }
 
-const renderComponent = (index, component, renderProps, propTypes, iteration) => {
+const renderComponent = (component, renderProps, propTypes, iteration) => {
   return (
-    <View key={index}>
+    <>
+      <View style={styles.componentContainer}>
+        {component(renderProps)}
+      </View>
       {iteration && <Text style={styles.componentIterations}>
         {JSON.stringify(iteration)
           .split('":').join('": ')
@@ -91,10 +107,7 @@ const renderComponent = (index, component, renderProps, propTypes, iteration) =>
               {`Prop '${key}' is required but value is: ${renderProps[key]}`}
             </Text>
       )}
-      <View style={styles.componentContainer}>
-        {component(renderProps)}
-      </View>
-    </View>
+    </>
   )
 }
 
