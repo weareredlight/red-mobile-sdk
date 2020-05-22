@@ -5,7 +5,6 @@ import {
   View,
   Text as RNText,
 } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 // Stories
 import Text from './stories/Text';
@@ -37,25 +36,25 @@ const App: () => React$Node = () => (
 const styles = {
   scrollView: {
     height: '100%',
-    backgroundColor: Colors.white,
+    backgroundColor: "#FFFFFF",
   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
-    borderBottomColor: Colors.lighter,
+    borderBottomColor: "#F3F3F3",
     borderBottomWidth: 1,
     paddingBottom: 20,
   },
   sectionTitle: {
     fontSize: 28,
     fontWeight: '600',
-    color: Colors.black,
+    color: "#000000",
   },
   sectionDescription: {
     marginTop: 18,
     fontSize: 16,
     fontWeight: '400',
-    color: Colors.dark,
+    color: "#000000",
   },
 }
 

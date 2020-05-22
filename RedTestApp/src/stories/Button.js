@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from 'red-mobile-sdk/components';
 import { localStyles as ButtonStyles } from 'red-mobile-sdk/components/lib/elements/Button';
 
-import ComponentDetails from './__ComponentDetails'
+import ComponentDetails from '../ComponentDetails'
 
 const ButtonStory = () => {
   return (

@@ -3,7 +3,7 @@ import React from 'react';
 import { Text } from 'red-mobile-sdk/components';
 import { localStyles as TextStyles } from 'red-mobile-sdk/components/lib/elements/Text';
 
-import ComponentDetails from './__ComponentDetails'
+import ComponentDetails from '../ComponentDetails'
 
 const TextStory = () => {
   return (

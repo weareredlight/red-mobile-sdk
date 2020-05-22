@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import merge from 'lodash/merge'
 import { View, Text, Button } from 'react-native'
-import styles from './__ComponentDetailsStyles'
+import styles from './ComponentDetailsStyles'
 
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes).map(key => ({
