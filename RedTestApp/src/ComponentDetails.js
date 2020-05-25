@@ -19,23 +19,19 @@ const ComponentDetails = ({
 }) => {
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
-  const [showIterations, setShowIterations] = useState(false)
+  const [showIterations, setShowIterations] = useState(true)
 
   const onIterations = useCallback(() => {
     setShowIterations(!showIterations)
-    setShowStyles(false)
-    setShowProps(false)
   }, [showIterations])
 
   const onProps = useCallback(() => {
     setShowProps(!showProps)
-    setShowIterations(false)
     setShowStyles(false)
   }, [showProps])
 
   const onStyles = useCallback(() => {
     setShowStyles(!showStyles)
-    setShowIterations(false)
     setShowProps(false)
   }, [showStyles])
 
@@ -60,6 +56,18 @@ const ComponentDetails = ({
         <Button title="Iterations" onPress={onIterations} />
       </View>
 
+      {showProps &&
+        <View style={styles.section}>
+          {renderProps(propTypes)}
+        </View>
+      }
+
+      {showStyles &&
+        <View style={styles.section}>
+          {renderStyles(style)}
+        </View>
+      }
+
       {showIterations && (
         <View style={styles.section}>
           {iterations.map((iteration, index) => {
@@ -73,18 +81,6 @@ const ComponentDetails = ({
           })}
         </View>
       )}
-
-      {showProps &&
-        <View style={styles.section}>
-          {renderProps(propTypes)}
-        </View>
-      }
-
-      {showStyles &&
-        <View style={styles.section}>
-          {renderStyles(style)}
-        </View>
-      }
     </View>
   )
 }

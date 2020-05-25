@@ -1,47 +1,73 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Text as RNText } from 'react-native'
 
-// // Elements && styles
-// import styles from '../styles'
+import { createStyles, mergeStyles } from '../../utils'
 
-const Text = ({ title, small, style, center, noWide, children }) => {
-  let textStyles = { ...localStyles.text }
-  if (title) textStyles = { ...textStyles, ...localStyles.textTitle }
-  if (small) textStyles = { ...textStyles, ...localStyles.textSmall }
-  if (noWide) textStyles.width = 'auto'
-  if (center) textStyles.textAlign = 'center'
-  textStyles = { ...textStyles, ...style }
+const Text = ({
+  title,
+  small,
+  style,
+  center,
+  inline,
+  children,
+}) => {
+  const finalStyle = useMemo(() => {
+    const s = createStyles(localStyle.default)
 
-  return <RNText style={textStyles}>{children}</RNText>
+    if (inline)
+      s[0].text.width = 'auto'
+    if (center)
+      s[0].text.textAlign = 'center'
+    if (title)
+      s.push(localStyle.title)
+    if (small)
+      s.push(localStyle.small)
+
+    if (style)
+      s.push(style)
+
+    const mergedStyles = mergeStyles(s)
+    console.log("mergedStyles", mergedStyles)
+
+    return mergedStyles
+  }, [inline, center, title, small, style])
+
+  return <RNText style={finalStyle.text}>{children}</RNText>
 }
 
 Text.propTypes = {
   title: PropTypes.bool,
   small: PropTypes.bool,
   center: PropTypes.bool,
-  noWide: PropTypes.bool,
+  inline: PropTypes.bool,
   style: PropTypes.shape(),
   children: PropTypes.any.isRequired
 }
 
-export const localStyles = {
-  text: {
-    flexWrap: 'wrap',
-    width: '100%',
-    paddingVertical: 2,
-    paddingHorizontal: 8,
-    color: "#000000",
-    fontSize: 18
+export const localStyle = {
+  default: {
+    text: {
+      flexWrap: 'wrap',
+      width: '100%',
+      paddingVertical: 2,
+      paddingHorizontal: 8,
+      color: "#000000",
+      fontSize: 18
+    },
   },
-  textTitle: {
-    fontSize: 24,
-    fontWeight: '500'
+  title: {
+    text: {
+      fontSize: 24,
+      fontWeight: '500'
+    },
   },
-  textSmall: {
-    fontSize: 12,
-    fontWeight: '100'
-  }
+  small: {
+    text: {
+      fontSize: 12,
+      fontWeight: '100'
+    },
+  },
 }
 
 export default Text

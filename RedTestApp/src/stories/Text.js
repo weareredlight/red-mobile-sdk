@@ -11,14 +11,24 @@ const TextStory = () => {
       component={Text}
       style={TextStyles}
       defaultProps={{
-        style: { backgroundColor: 'pink' },
+        style: { text: { backgroundColor: 'pink' } },
         children: 'This is text'
       }}
       iterations={[
-        { title: true, children: 'Title' },
-        { small: true, children: 'small text, shhh' },
-        { center: true, children: 'centered text' },
-        { noWide: true },
+        { children: 'Title', title: true },
+        { children: 'small', small: true },
+        { children: 'inline', inline: true },
+        { children: 'center', center: true },
+        {
+          children: 'with style',
+          style: {
+            text: {
+              color: 'green',
+              fontSize: 40,
+              textAlign: 'right'
+            }
+          }
+        },
       ]}
     />
   )

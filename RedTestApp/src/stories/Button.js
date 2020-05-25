@@ -15,11 +15,12 @@ const ButtonStory = () => {
         onPress: () => {},
       }}
       iterations={[
-        { title: 'override 1', primary: true },
-        { title: 'override error', transparent: true },
-        { title: 'disabled', disabled: true, inline: true },
-        { title: 'not wide', style: { button: { backgroundColor: 'pink' } } },
-        { title: 'override error', secondary: true },
+        { title: 'primary', primary: true },
+        { title: 'secondary', secondary: true },
+        { title: 'transparent', transparent: true },
+        { title: 'disabled', disabled: true },
+        { title: 'inline', inline: true },
+        { title: 'with style', style: { text: { color: 'red' }, button: { backgroundColor: 'pink' } } },
       ]}
     />
   )
