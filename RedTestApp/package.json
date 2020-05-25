@@ -14,30 +14,30 @@
     "build-android-aab": "android/gradlew clear; android/gradlew bundleRelease"
   },
   "dependencies": {
-    "axe-prop-types": "^1.0.9",
-    "react": "16.11.0",
-    "react-dom": "^16.13.1",
+    "axe-prop-types": "1.0.9",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-native": "0.62.2",
-    "react-native-web": "^0.12.2"
+    "react-native-web": "0.12.2"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.47",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "babel-jest": "^24.9.0",
+    "@react-native-community/eslint-config": "0.0.5",
+    "babel-jest": "24.9.0",
     "babel-loader": "8.1.0",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "babel-plugin-react-native-web": "^0.12.2",
-    "babel-preset-react-native": "^5.0.2",
-    "babel-runtime": "^6.26.0",
-    "eslint": "^6.5.1",
-    "html-webpack-plugin": "^4.3.0",
-    "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.59.0",
+    "babel-plugin-module-resolver": "4.0.0",
+    "babel-plugin-react-native-web": "0.12.2",
+    "babel-preset-react-native": "5.0.2",
+    "babel-runtime": "6.26.0",
+    "eslint": "6.5.1",
+    "html-webpack-plugin": "4.3.0",
+    "jest": "24.9.0",
+    "metro-react-native-babel-preset": "0.59.0",
     "react-test-renderer": "16.11.0",
-    "url-loader": "^4.1.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "url-loader": "4.1.0",
+    "webpack": "4.43.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.11.0"
   },
   "jest": {
     "preset": "react-native"

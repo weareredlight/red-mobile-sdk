@@ -30,13 +30,6 @@ module.exports = {
             presets: ['react-native'],
             plugins: [
               ['react-native-web'],
-              ['module-resolver',
-                {
-                  alias: {
-                    'red-mobile-sdk/components': path.join(rootDir, '../packages/components'),
-                  },
-                },
-              ],
             ]
           }
         }
@@ -66,11 +59,11 @@ module.exports = {
       '.js',
     ],
     alias: {
+      'react': path.resolve('./node_modules/react'),
       'react-native$': path.resolve(rootDir, 'node_modules/react-native-web'),
     },
   },
   devServer: {
-    writeToDisk: true,
     index: 'index.html',
     contentBase: path.join(rootDir, 'dist'),
     host: '0.0.0.0',

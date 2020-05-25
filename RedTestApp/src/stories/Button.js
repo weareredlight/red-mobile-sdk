@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button } from 'red-mobile-sdk/components';
-import { localStyles as ButtonStyles } from 'red-mobile-sdk/components/lib/elements/Button';
+import { Button } from 'components';
+import { localStyle as ButtonStyles } from 'components/lib/elements/Button';
 
 import ComponentDetails from '../ComponentDetails'
 
@@ -16,10 +16,10 @@ const ButtonStory = () => {
       }}
       iterations={[
         { title: 'override 1', primary: true },
-        { title: 'disabled', disabled: true },
         { title: 'override error', transparent: true },
+        { title: 'disabled', disabled: true, inline: true },
+        { title: 'not wide', style: { button: { backgroundColor: 'pink' } } },
         { title: 'override error', secondary: true },
-        { title: 'not wide', noWide: true, style: { backgroundColor: 'red' } },
       ]}
     />
   )

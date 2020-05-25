@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Text } from 'red-mobile-sdk/components';
-import { localStyles as TextStyles } from 'red-mobile-sdk/components/lib/elements/Text';
+import { Text } from 'components';
+import { localStyles as TextStyles } from 'components/lib/elements/Text';
 
 import ComponentDetails from '../ComponentDetails'
 

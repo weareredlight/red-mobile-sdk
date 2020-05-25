@@ -90,10 +90,11 @@ const ComponentDetails = ({
 }
 
 const renderComponent = (component, renderProps, propTypes, iteration) => {
+  const Comp = component
   return (
     <>
       <View style={styles.componentContainer}>
-        {component(renderProps)}
+        <Comp {...renderProps} />
       </View>
       {iteration && <Text style={styles.componentIterations}>
         {JSON.stringify(iteration)
