@@ -31,10 +31,7 @@ const Button = ({
     if (style)
       s.push(style)
 
-    const mergedStyles = mergeStyles(s)
-    console.log("mergedStyles", mergedStyles)
-
-    return mergedStyles
+    return mergeStyles(s)
   }, [inline, primary, secondary, transparent, disabled, style])
 
   return (
@@ -72,7 +69,7 @@ export const localStyle = {
       paddingHorizontal: 24,
       marginVertical: 8,
       marginHorizontal: '2%',
-      backgroundColor: 'blue'
+      backgroundColor: 'blue',
     },
     text: {
       color: 'white',
@@ -110,6 +107,15 @@ export const localStyle = {
   disabled: {
     button: {
       backgroundColor: 'grey',
+      __web: {
+        backgroundColor: 'purple'
+      },
+      __ios: {
+        backgroundColor: 'yellow'
+      },
+      __android: {
+        backgroundColor: 'green'
+      },
     },
     text: {
       color: 'black',

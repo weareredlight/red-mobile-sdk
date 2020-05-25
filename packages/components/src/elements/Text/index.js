@@ -27,10 +27,7 @@ const Text = ({
     if (style)
       s.push(style)
 
-    const mergedStyles = mergeStyles(s)
-    console.log("mergedStyles", mergedStyles)
-
-    return mergedStyles
+    return mergeStyles(s)
   }, [inline, center, title, small, style])
 
   return <RNText style={finalStyle.text}>{children}</RNText>
