@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button } from 'components';
-import { localStyle as ButtonStyles } from 'components/lib/elements/Button';
+import { ButtonStyle } from 'components/lib/elements/Button/style';
 
 import ComponentDetails from '../ComponentDetails'
 
@@ -9,7 +9,7 @@ const ButtonStory = () => {
   return (
     <ComponentDetails
       component={Button}
-      style={ButtonStyles}
+      style={ButtonStyle}
       defaultProps={{
         title: 'original',
         onPress: () => {},
@@ -20,7 +20,24 @@ const ButtonStory = () => {
         { title: 'transparent', transparent: true },
         { title: 'disabled', disabled: true },
         { title: 'inline', inline: true },
-        { title: 'with style', style: { text: { color: 'red' }, button: { backgroundColor: 'pink' } } },
+        {
+          title: 'with style',
+          style: {
+            text: {
+              color: 'red',
+              __ltePhablet: {
+                color: 'green',
+              },
+              __gteDesktop: {
+                color: 'blue'
+              },
+            },
+            button: {
+              backgroundColor: s => s.theme.anotherColor,
+              borderWidth: 2,
+            }
+          }
+        },
       ]}
     />
   )

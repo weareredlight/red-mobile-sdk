@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { TouchableOpacity, Text } from 'react-native'
 
-import { createStyles, mergeStyles } from '../../utils'
+import { useTheme } from '../../theme'
 
 const Button = ({
   inline,
@@ -14,25 +14,28 @@ const Button = ({
   onPress,
   title,
 }) => {
+  const { getStyles, createStyles, mergeStyles } = useTheme()
+
   const finalStyle = useMemo(() => {
-    const s = createStyles(localStyle.default)
+    const elementStyle = getStyles('Button')
+    const s = createStyles(elementStyle.default)
 
     if (inline)
       s[0].button.width = undefined
     if (primary)
-      s.push(localStyle.primary)
+      s.push(elementStyle.primary)
     if (secondary)
-      s.push(localStyle.secondary)
+      s.push(elementStyle.secondary)
     if (transparent)
-      s.push(localStyle.transparent)
+      s.push(elementStyle.transparent)
     if (disabled)
-      s.push(localStyle.disabled)
+      s.push(elementStyle.disabled)
 
     if (style)
       s.push(style)
 
     return mergeStyles(s)
-  }, [inline, primary, secondary, transparent, disabled, style])
+  }, [getStyles, inline, primary, secondary, transparent, disabled, style])
 
   return (
     <TouchableOpacity
@@ -54,73 +57,6 @@ Button.propTypes = {
   style: PropTypes.shape(),
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
-}
-
-export const localStyle = {
-  default: {
-    button: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 6,
-      minWidth: 100,
-      width: '96%',
-      paddingVertical: 12,
-      paddingHorizontal: 24,
-      marginVertical: 8,
-      marginHorizontal: '2%',
-      backgroundColor: 'blue',
-    },
-    text: {
-      color: 'white',
-      fontSize: 16,
-    },
-  },
-
-  primary: {
-    button: {
-      backgroundColor: 'green',
-    },
-    text: {
-      color: 'white',
-    },
-  },
-
-  secondary: {
-    button: {
-      backgroundColor: 'tomato',
-    },
-    text: {
-      color: 'white',
-    },
-  },
-
-  transparent: {
-    button: {
-      backgroundColor: 'transparent',
-    },
-    text: {
-      color: 'black',
-    },
-  },
-
-  disabled: {
-    button: {
-      backgroundColor: 'grey',
-      __web: {
-        backgroundColor: 'purple'
-      },
-      __ios: {
-        backgroundColor: 'yellow'
-      },
-      __android: {
-        backgroundColor: 'green'
-      },
-    },
-    text: {
-      color: 'black',
-    },
-  },
 }
 
 export default Button

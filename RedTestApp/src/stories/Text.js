@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Text } from 'components';
-import { localStyles as TextStyles } from 'components/lib/elements/Text';
+import { TextStyle } from 'components/lib/elements/Text/style';
 
 import ComponentDetails from '../ComponentDetails'
 
@@ -9,7 +9,7 @@ const TextStory = () => {
   return (
     <ComponentDetails
       component={Text}
-      style={TextStyles}
+      style={TextStyle}
       defaultProps={{
         style: { text: { backgroundColor: 'pink' } },
         children: 'This is text'
@@ -23,10 +23,18 @@ const TextStory = () => {
           children: 'with style',
           style: {
             text: {
-              color: 'green',
-              fontSize: 40,
-              textAlign: 'right'
-            }
+              color: 'red',
+              textAlign: 'right',
+              __ltePhablet: {
+                color: 'green',
+              },
+              __gteDesktop: {
+                color: 'blue'
+              },
+              __isLandscape: {
+                color: 'white',
+              },
+            },
           }
         },
       ]}

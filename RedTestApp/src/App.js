@@ -6,31 +6,78 @@ import {
   Text as RNText,
 } from 'react-native';
 
+// Theme provider
+import { ThemeProvider } from 'components';
+
 // Stories
 import Text from './stories/Text';
 import Button from './stories/Button';
 
 const App: () => React$Node = () => (
-  <SafeAreaView>
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.sectionContainer}>
-        <RNText style={styles.sectionTitle}>
-          🔴 RedTestApp 🔴
-        </RNText>
-        <RNText style={styles.sectionDescription}>
-          This app mirrors all the components made available by red-mobile-sdk/components
-        </RNText>
-        <RNText style={styles.sectionDescription}>
-          Please keep this app updated 🙏
-        </RNText>
-      </View>
+  <ThemeProvider
+    breakPoints={[550, 750, 1000, 1400]}
+    variables={{
+      textSize: 24,
+      userColor: 'tomato',
+      userSpecialColor: 'pink',
+      redishFontWeight: 900,
+      buttonHeight: 200,
+      anotherColor: s => s.themes.default.userSpecialColor,
+      __web: {
+        textSize: 40,
+        __tablet: {
+          textSize: 70,
+        },
+      }
+    }}
+    themes={{
+      redish: {
+        primaryColor: 'red',
+        fontWeight: s => s.themes.default.redishFontWeight,
+        textColor: 'white',
+        __android: {
+          textColor: 'green',
+        }
+      },
+      redishCopy: s => ({
+        ...s.themes.redish,
+        textColor: 'black',
+      })
+    }}
+    components={{
+      Button: {
+        default: {
+          button: {
+            height: s => s.theme.buttonHeight,
+            __isLandscape: {
+              height: 100,
+            },
+          },
+        },
+      },
+    }}
+  >
+    <SafeAreaView>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.sectionContainer}>
+          <RNText style={styles.sectionTitle}>
+            🔴 RedTestApp 🔴
+          </RNText>
+          <RNText style={styles.sectionDescription}>
+            This app mirrors all the components made available by red-mobile-sdk/components
+          </RNText>
+          <RNText style={styles.sectionDescription}>
+            Please keep this app updated 🙏
+          </RNText>
+        </View>
 
-      {/* List all stories */}
-      <Text />
-      <Button />
+        {/* List all stories */}
+        <Text />
+        <Button />
 
-    </ScrollView>
-  </SafeAreaView>
+      </ScrollView>
+    </SafeAreaView>
+  </ThemeProvider>
 );
 
 const styles = {

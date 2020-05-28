@@ -136,6 +136,17 @@ const renderStyles = theme =>
           {renderStyles(value)}
         </View>
       )
+    } if (typeof value === 'function') {
+      return (
+        <View key={key} style={styles.styleContainer}>
+          <Text style={styles.propName}>
+            {key}
+          </Text>
+          <Text style={styles.propType}>
+            {'function()'}
+          </Text>
+        </View>
+      )
     } else {
       return (
         <View key={key} style={styles.styleContainer}>
