@@ -3,7 +3,8 @@ import merge from 'lodash/merge'
 import cloneDeep from 'lodash/cloneDeep'
 
 const defaultPlatforms = ['android', 'ios', 'web']
-const defaultOrientation = 'isLandscape'
+const defaultLandscape = 'isLandscape'
+const defaultMixin = 'mixins'
 const defaultBreakPoints = [
   'phone',
   'phablet',
@@ -18,81 +19,88 @@ const defaultBreakPoints = [
   'gteDesktop',
 ]
 
+
+
 export const createStyles = base => cloneDeep([base])
 
 export const mergeStyles = (theme, styles) => {
   const mergedStyles = merge({}, ...styles)
-
-  // For each component state
-  parseThemeFunctions(theme, mergedStyles)
-
-  // Remove unused styles for each theme
-  parseThemeTargets(theme, mergedStyles, theme.breakPoints)
-
-  return mergedStyles
+  const parsedStyles = parseThemeDeep(theme, mergedStyles, theme.breakPoints)
+  return parsedStyles
 }
 
 export const themeParser = theme => {
-  const themeCopy = createStyles(theme)[0]
-  const { themes, breakPoints } = themeCopy
-
-  // Run theme functions
-  parseThemeFunctions(themeCopy, themes)
-
-  // Remove unused styles for each theme
-  parseThemeTargets(themeCopy, themes, breakPoints)
-
-  return themeCopy
+  const { themes, breakPoints } = theme
+  const parsedThemes = parseThemeDeep(theme, themes, breakPoints)
+  return {
+    ...theme,
+    themes: parsedThemes
+  }
 }
 
-export const parseThemeFunctions = (theme, list) => {
-  // Run theme functions
-  Object.entries(list).forEach(([name, t]) => {
-    if (typeof t === 'function')
-      list[name] = t(theme)
-    else {
-      Object.entries(t).forEach(([prop, val]) => {
-        if (typeof val === 'function')
-          t[prop] = val(theme)
-      })
-    }
-  })
+
+
+export const needsMoreParsing = data => {
+  if (
+    Object.keys(data).some(k => k.startsWith('__')) ||
+    Object.values(data).some(v => typeof v === 'function')
+  )
+    return true
+  return false
 }
 
-export const parseThemeTargets = (theme, list, breakPoints) => {
-  // Remove unused styles for each theme
-  Object.entries(list).forEach(([name, t]) => {
-    const flatTheme = thm => {
-      const flatten = Object.entries(thm).map(([prop, value]) => {
-        if (prop.startsWith('__')) {
-          const cleanKey = prop.slice(2)
+export const parseThemeDeep = (theme, list, breakPoints) => {
 
-          // OS dependent
-          if (defaultPlatforms.includes(cleanKey))
-            if (Platform.OS === cleanKey) return value
-            else return {}
+  const flatTheme = (thm) => {
+    const flatten = Object.entries(thm).map(([prop, val]) => {
+      const cleanKey = prop.slice(2)
+      let parseResutl
+  
+      const getValue = typeof val === 'function' ? val(theme) : val
+  
+      if (defaultPlatforms.includes(cleanKey)) {
+        // OS dependent
+        parseResutl = Platform.OS === cleanKey ? getValue : {}
 
-          // Screen dependent
-          if (defaultBreakPoints.includes(cleanKey))
-            if (breakPoints[cleanKey]) return value
-            else return {}
-          if (cleanKey === defaultOrientation)
-            if (theme.window.isLandscape) return value
-            else return {}
-        }
-        return { [prop]: value }
-      })
-      const result = merge({}, ...flatten)
+      } else if (defaultBreakPoints.includes(cleanKey)) {
+        // Break Points
+        parseResutl = breakPoints[cleanKey] ? getValue : {}
 
-      if (Object.keys(result).some(k => k.startsWith('__')))
-        return flatTheme(result)
+      } else if (cleanKey === defaultLandscape) {
+        // Landscape
+        parseResutl = theme.window.isLandscape ? getValue : {}
 
-      return result
-    }
+      } else if (cleanKey === defaultMixin) {
+        // Mixins
+        const mixinResults = Object.entries(val).map(([mixinName, mixinParams]) => {
+          return theme.mixins[mixinName](theme, ...mixinParams)
+        })
+        parseResutl = merge({}, ...mixinResults)
 
-    list[name] = flatTheme(list[name])
-  })
+      } else if (typeof val === 'function') {
+        // 'val' is a function
+        debugger
+        parseResutl = flatTheme({ [prop]: getValue })
+
+      } else if (typeof val === 'object') {
+        // 'val' is an object
+        // Solve all this "inside" (recursive)
+        parseResutl = { [prop]: flatTheme(val) }
+
+      } else parseResutl = { [prop]: val }
+
+      return parseResutl
+    })
+    const result = merge({}, ...flatten)
+
+    if (needsMoreParsing(result))
+      return flatTheme(result)
+    return result
+  }
+  return flatTheme(list)
 }
+
+
 
 export const buildScreen = ({ window: w, screen: s }, breakPoints) => {
   const [minPhablet, minTablet, minDesktop, minDesktopHD] = breakPoints

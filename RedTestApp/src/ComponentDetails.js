@@ -19,19 +19,23 @@ const ComponentDetails = ({
 }) => {
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
-  const [showIterations, setShowIterations] = useState(true)
+  const [showIterations, setShowIterations] = useState(false)
 
   const onIterations = useCallback(() => {
     setShowIterations(!showIterations)
+    setShowStyles(false)
+    setShowProps(false)
   }, [showIterations])
 
   const onProps = useCallback(() => {
     setShowProps(!showProps)
+    setShowIterations(false)
     setShowStyles(false)
   }, [showProps])
 
   const onStyles = useCallback(() => {
     setShowStyles(!showStyles)
+    setShowIterations(false)
     setShowProps(false)
   }, [showStyles])
 
@@ -64,7 +68,7 @@ const ComponentDetails = ({
 
       {showStyles &&
         <View style={styles.section}>
-          {renderStyles(style)}
+          {renderStyles(style, 0)}
         </View>
       }
 
@@ -125,15 +129,19 @@ const renderProps = propTypes => propTypes.map((prop, index) => (
   </View>
 ))
 
-const renderStyles = theme =>
+const renderStyles = (theme, level) =>
   Object.entries(theme).map(([key, value], index) => {
     if (typeof value === 'object') {
       return (
         <View key={key} style={styles.styleKey}>
           <Text style={styles.propName}>
             {key}
+            <Text style={styles.propRequired}>
+              {'  '}
+              {level === 0 ? 'state' : level === 1 ? 'element' : ''}
+            </Text>
           </Text>
-          {renderStyles(value)}
+          {renderStyles(value, level + 1)}
         </View>
       )
     } if (typeof value === 'function') {

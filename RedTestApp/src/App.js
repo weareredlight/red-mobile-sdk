@@ -20,6 +20,7 @@ const App: () => React$Node = () => (
       textSize: 24,
       userColor: 'tomato',
       userSpecialColor: 'pink',
+      userSpecialColor1: 'red',
       redishFontWeight: 900,
       buttonHeight: 200,
       anotherColor: s => s.themes.default.userSpecialColor,
@@ -28,7 +29,7 @@ const App: () => React$Node = () => (
         __tablet: {
           textSize: 70,
         },
-      }
+      },
     }}
     themes={{
       redish: {
@@ -49,12 +50,30 @@ const App: () => React$Node = () => (
         default: {
           button: {
             height: s => s.theme.buttonHeight,
-            __isLandscape: {
-              height: 100,
+            __lteTablet: {
+              __lteTablet: {
+                __lteTablet: {
+                  height: s => s.theme.buttonHeight / 2,
+                },
+                __mixins: {
+                  bgColor: [],
+                }
+              },
             },
           },
+          testElement: () => ({ height: 'TEST ELEMENT' })
         },
       },
+    }}
+    mixins={{
+      bgColor: (s) => {
+        return {
+          backgroundColor: 'blue',
+          __gtePhablet: {
+            backgroundColor: x => x.theme.userSpecialColor,
+          },
+        }
+      }
     }}
   >
     <SafeAreaView>

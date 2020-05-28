@@ -33,10 +33,7 @@ const themeDefaultTemplate = {
 
   // default theme
   themes: {
-    [defaultThemeName]: {
-      textSize: 14,
-      primaryColor: 'cyan',
-    }
+    [defaultThemeName]: {}
   },
 
   // Include all components by default
@@ -51,6 +48,7 @@ const defaultThemeBuilder = (
   variables,
   themes,
   components,
+  mixins,
 ) => ({
   ...createStyles(themeDefaultTemplate)[0],
   ...buildScreen(
@@ -69,6 +67,7 @@ const defaultThemeBuilder = (
     ...themes,
   },
   components: merge({}, themeDefaultTemplate.components, components),
+  mixins,
 })
 
 export const ThemeProvider = props => {
@@ -77,6 +76,7 @@ export const ThemeProvider = props => {
     variables = {},
     themes = {},
     components = {},
+    mixins = {},
   } = props
 
   const [selectedTheme, setSelectedTheme] = useState(defaultThemeName)
@@ -86,6 +86,7 @@ export const ThemeProvider = props => {
       variables,
       themes,
       components,
+      mixins,
     )
   )
 
@@ -107,7 +108,6 @@ export const ThemeProvider = props => {
         themes: [], // remove access to all themes
         theme: parsedTheme.themes[selectedTheme],
       }
-      console.log('DEBUG: simplifiedTheme', simplifiedTheme)
 
       return {
         // theme object
