@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import { Button } from 'components';
-import { ButtonStyle } from 'components/lib/elements/Button/style';
+import { Button } from 'components'
+import { ButtonStyle } from 'components/lib/elements/Button/style'
 
 import ComponentDetails from '../ComponentDetails'
 
@@ -30,15 +30,15 @@ const ButtonStory = () => {
                   color: 'green',
                 },
                 __gteDesktop: {
-                  color: 'blue'
+                  color: 'blue',
                 },
               },
               button: {
                 backgroundColor: t => t.vars.anotherColor,
                 borderWidth: 2,
-              }
+              },
             },
-          }
+          },
         },
       ]}
     />

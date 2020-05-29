@@ -21,16 +21,21 @@ const Button = ({
     const parsedTheme = mergeStyles([getStyles('Button'), style || {}], true)
     const s = [parsedTheme.default]
 
-    if (inline)
+    if (inline) {
       s[0].button.width = undefined
-    if (primary)
+    }
+    if (primary) {
       s.push(parsedTheme.primary)
-    if (secondary)
+    }
+    if (secondary) {
       s.push(parsedTheme.secondary)
-    if (transparent)
+    }
+    if (transparent) {
       s.push(parsedTheme.transparent)
-    if (disabled)
+    }
+    if (disabled) {
       s.push(parsedTheme.disabled)
+    }
 
     return mergeStyles(s, skipThemeParsing)
   }, [getStyles, style, inline, primary, secondary, transparent, disabled, skipThemeParsing])

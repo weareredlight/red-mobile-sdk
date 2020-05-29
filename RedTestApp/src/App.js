@@ -1,65 +1,58 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text as RNText,
-} from 'react-native';
+import React from 'react'
+import { SafeAreaView, ScrollView, View, Text } from 'react-native'
 
 // Theme provider
-import { ThemeProvider } from 'components';
+import { ThemeProvider } from 'components'
 
 // Stories
-import Text from './stories/Text';
-import Button from './stories/Button';
+import { default as TextStory } from './stories/Text'
+import { default as ButtonStory } from './stories/Button'
 
-const App: () => React$Node = () => (
+const App = () => (
   <ThemeProvider>
     <SafeAreaView>
       <ScrollView style={styles.scrollView}>
         <View style={styles.sectionContainer}>
-          <RNText style={styles.sectionTitle}>
-            🔴 RedTestApp 🔴
-          </RNText>
-          <RNText style={styles.sectionDescription}>
-            This app mirrors all the components made available by red-mobile-sdk/components
-          </RNText>
-          <RNText style={styles.sectionDescription}>
+          <Text style={styles.sectionTitle}>🔴 RedTestApp 🔴</Text>
+          <Text style={styles.sectionDescription}>
+            This app mirrors all the components made available by
+            red-mobile-sdk/components
+          </Text>
+          <Text style={styles.sectionDescription}>
             Please keep this app updated 🙏
-          </RNText>
+          </Text>
         </View>
 
         {/* List all stories */}
-        <Text />
-        <Button />
-
+        <TextStory />
+        <ButtonStory />
       </ScrollView>
     </SafeAreaView>
   </ThemeProvider>
-);
+)
 
 const styles = {
   scrollView: {
     height: '100%',
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
-    borderBottomColor: "#F3F3F3",
+    borderBottomColor: '#F3F3F3',
     borderBottomWidth: 1,
     paddingBottom: 20,
   },
   sectionTitle: {
     fontSize: 28,
     fontWeight: '600',
-    color: "#000000",
+    color: '#000000',
   },
   sectionDescription: {
     marginTop: 18,
     fontSize: 16,
     fontWeight: '400',
-    color: "#000000",
+    color: '#000000',
   },
 }
 

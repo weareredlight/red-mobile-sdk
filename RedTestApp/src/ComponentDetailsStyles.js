@@ -1,13 +1,13 @@
 const styles = {
   container: {
-    borderBottomColor: "#F3F3F3",
+    borderBottomColor: '#F3F3F3',
     borderBottomWidth: 1,
     padding: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: "#000000",
+    color: '#000000',
     padding: 10,
     paddingBottom: 4,
   },
@@ -20,7 +20,7 @@ const styles = {
   },
   section: {
     flexDirection: 'column',
-    backgroundColor: "#F3F3F3",
+    backgroundColor: '#F3F3F3',
     borderRadius: 4,
     margin: 4,
     paddingVertical: 8,
@@ -29,7 +29,7 @@ const styles = {
     width: '100%',
     height: 1,
     marginVertical: 10,
-    borderBottomColor: "#DFDFDF",
+    borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
   },
   propContainer: {
@@ -43,7 +43,7 @@ const styles = {
     padding: 4,
     fontSize: 16,
     fontWeight: '400',
-    color: "#333333",
+    color: '#333333',
   },
   propRequired: {
     flex: 1,
@@ -52,22 +52,22 @@ const styles = {
     fontWeight: '300',
     fontStyle: 'italic',
     color: 'grey',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   propType: {
     flex: 1,
     padding: 4,
     fontSize: 16,
     fontWeight: '300',
-    color: "#333333",
-    textAlign: 'right'
+    color: '#333333',
+    textAlign: 'right',
   },
   styleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderLeftColor: "#DFDFDF",
+    borderLeftColor: '#DFDFDF',
     borderLeftWidth: 1,
-    borderBottomColor: "#DFDFDF",
+    borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
     marginLeft: 14,
     paddingVertical: 4,
@@ -79,7 +79,7 @@ const styles = {
   },
   componentContainer: {
     alignItems: 'flex-start',
-    borderColor: "#DFDFDF",
+    borderColor: '#DFDFDF',
     borderWidth: 1,
     marginHorizontal: 10,
     marginVertical: 4,
@@ -97,7 +97,7 @@ const styles = {
     marginHorizontal: 12,
     marginVertical: 2,
     color: 'red',
-  }
+  },
 }
 
 export default styles

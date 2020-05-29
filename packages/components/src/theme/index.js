@@ -4,9 +4,10 @@ import React, {
   useState,
   useMemo,
   useCallback,
-  useEffect
+  useEffect,
 } from 'react'
-import { Platform, Dimensions, TouchableWithoutFeedback } from 'react-native'
+import PropTypes from 'prop-types'
+import { Dimensions } from 'react-native'
 import merge from 'lodash/merge'
 
 import {
@@ -17,8 +18,8 @@ import {
 } from './utils'
 
 // ComponentThemes
-import { ButtonStyle } from '../elements/Button/style'
-import { TextStyle } from '../elements/Text/style'
+import { ButtonStyle } from '../elements/Button/style'
+import { TextStyle } from '../elements/Text/style'
 
 import { defaultTheme } from './defaultTheme'
 
@@ -29,7 +30,7 @@ const ThemeContext = createContext()
 const defaultThemeName = 'default'
 
 const themeDefaultTemplate = {
-  breakPoints: {}, // filled on load
+  breakPoints: {}, // filled on load
   screen: {}, // filled on load
   window: {}, // filled on load
 
@@ -45,8 +46,8 @@ const themeDefaultTemplate = {
   components: merge(
     {},
     {
-      'Button': ButtonStyle,
-      'Text': TextStyle,
+      Button: ButtonStyle,
+      Text: TextStyle,
     },
     defaultTheme.components,
   ),
@@ -71,7 +72,7 @@ export const ThemeProvider = props => {
       themes,
       components,
       mixins,
-    )
+    ),
   )
 
   const updateTheme = useCallback(update => {
@@ -112,19 +113,29 @@ export const ThemeProvider = props => {
           updateTheme({ themes: { [(themeName || defaultThemeName)]: { [varName]: val } } }),
       }
     },
-    [theme, selectedTheme]
+    [theme, selectedTheme],
   )
 
-  console.log("Render count:", renderCount++)
+  console.log('Render count:', renderCount++)
   return <ThemeContext.Provider value={themeContext} {...props} />
+}
+
+ThemeProvider.propTypes = {
+  breakPoints: PropTypes.arrayOf([PropTypes.number]),
+  variables: PropTypes.shape(),
+  themes: PropTypes.shape(),
+  components: PropTypes.shape(),
+  mixins: PropTypes.shape(),
 }
 
 export const useTheme = () => {
   const themeContext = useContext(ThemeContext)
   if (!themeContext) {
     throw new Error(
-      'Clients of useTheme must be wrapped inside a <ThemeProvider />'
+      'Clients of useTheme must be wrapped inside a <ThemeProvider />',
     )
   }
   return themeContext
 }
+
+export default ThemeProvider

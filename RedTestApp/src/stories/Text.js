@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import { Text } from 'components';
-import { TextStyle } from 'components/lib/elements/Text/style';
+import { Text } from 'components'
+import { TextStyle } from 'components/lib/elements/Text/style'
 
 import ComponentDetails from '../ComponentDetails'
 
@@ -12,7 +12,7 @@ const TextStory = () => {
       style={TextStyle}
       defaultProps={{
         style: { default: { text: { backgroundColor: 'pink' } } },
-        children: 'This is text'
+        children: 'This is text',
       }}
       iterations={[
         { children: 'Title', title: true },
@@ -30,14 +30,14 @@ const TextStory = () => {
                   color: 'green',
                 },
                 __gteDesktop: {
-                  color: 'blue'
+                  color: 'blue',
                 },
                 __isLandscape: {
                   color: 'white',
                 },
               },
-            }
-          }
+            },
+          },
         },
       ]}
     />

@@ -23,10 +23,11 @@ export const createStyles = base => cloneDeep([base])
 
 export const mergeStyles = (theme, styles, skipParse) => {
   const mergedStyles = merge({}, ...styles)
-  if (skipParse)
+  if (skipParse) {
     return mergedStyles
-  else
+  } else {
     return parseThemeDeep(theme, mergedStyles, theme.breakPoints)
+  }
 }
 
 export const themeParser = (theme, selectedTheme) => {
@@ -47,32 +48,29 @@ export const needsMoreParsing = data => {
   if (
     Object.keys(data).some(k => k.startsWith('__')) ||
     Object.values(data).some(v => typeof v === 'function')
-  )
+  ) {
     return true
+  }
   return false
 }
 
 export const parseThemeDeep = (theme, list, breakPoints) => {
-
   const flatTheme = (thm) => {
     const flatten = Object.entries(thm).map(([prop, val]) => {
       const cleanKey = prop.slice(2)
       let parseResutl
-  
+
       const getValue = typeof val === 'function' ? val(theme) : val
-  
+
       if (defaultPlatforms.includes(cleanKey)) {
         // OS dependent
         parseResutl = Platform.OS === cleanKey ? getValue : {}
-
       } else if (defaultBreakPoints.includes(cleanKey)) {
         // Break Points
         parseResutl = breakPoints[cleanKey] ? getValue : {}
-
       } else if (cleanKey === defaultLandscape) {
         // Landscape
         parseResutl = theme.window.isLandscape ? getValue : {}
-
       } else if (cleanKey === defaultMixin) {
         // Mixins
         const mixinResults = Object.entries(val).map(([mixinName, mixinParams]) => {
@@ -81,30 +79,27 @@ export const parseThemeDeep = (theme, list, breakPoints) => {
             return mixinFunc(theme, ...mixinParams)
           } else {
             throw new Error(
-              `Mixin '${mixinName}' not found. Please check your <ThemeProvider mixins={obj}>`
+              `Mixin '${mixinName}' not found. Please check your <ThemeProvider mixins={obj}>`,
             )
-            return {}
           }
         })
         parseResutl = merge({}, ...mixinResults)
-
       } else if (typeof val === 'function') {
         // 'val' is a function
         parseResutl = flatTheme({ [prop]: getValue })
-
       } else if (typeof val === 'object') {
         // 'val' is an object
         // Solve all this "inside" (recursive)
         parseResutl = { [prop]: flatTheme(val) }
-
       } else parseResutl = { [prop]: val }
 
       return parseResutl
     })
     const result = merge({}, ...flatten)
 
-    if (needsMoreParsing(result))
+    if (needsMoreParsing(result)) {
       return flatTheme(result)
+    }
     return result
   }
   return flatTheme(list)
@@ -125,7 +120,7 @@ export const defaultThemeBuilder = (
       window: Dimensions.get('window'),
       screen: Dimensions.get('screen'),
     },
-    breakPoints
+    breakPoints,
   ),
   themes: {
     ...themeDefaultTemplate.themes,
@@ -162,11 +157,11 @@ export const buildScreen = ({ window: w, screen: s }, breakPoints) => {
     },
     window: {
       ...w,
-      isLandscape: w.width > w.height
+      isLandscape: w.width > w.height,
     },
     screen: {
       ...s,
-      isLandscape: s.width > s.height
+      isLandscape: s.width > s.height,
     },
   }
 }

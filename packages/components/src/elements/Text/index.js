@@ -19,14 +19,18 @@ const Text = ({
     const parsedTheme = mergeStyles([getStyles('Text'), style || {}], true)
     const s = [parsedTheme.default]
 
-    if (inline)
+    if (inline) {
       s[0].text.width = 'auto'
-    if (center)
+    }
+    if (center) {
       s[0].text.textAlign = 'center'
-    if (title)
+    }
+    if (title) {
       s.push(parsedTheme.title)
-    if (small)
+    }
+    if (small) {
       s.push(parsedTheme.small)
+    }
 
     return mergeStyles(s, skipThemeParsing)
   }, [getStyles, style, inline, center, title, small, skipThemeParsing])

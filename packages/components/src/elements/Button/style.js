@@ -50,13 +50,13 @@ export const ButtonStyle = {
     button: {
       backgroundColor: 'grey',
       __web: {
-        backgroundColor: 'purple'
+        backgroundColor: 'purple',
       },
       __ios: {
-        backgroundColor: 'yellow'
+        backgroundColor: 'yellow',
       },
       __android: {
-        backgroundColor: 'green'
+        backgroundColor: 'green',
       },
     },
     text: {

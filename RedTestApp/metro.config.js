@@ -9,9 +9,7 @@ module.exports = {
       },
     }),
   },
-  watchFolders: [
-    path.resolve(__dirname, '../packages'),
-  ],
+  watchFolders: [path.resolve(__dirname, '../packages')],
   resolver: {
     extraNodeModules: new Proxy(
       {},
@@ -25,4 +23,4 @@ module.exports = {
       },
     ),
   },
-};
+}

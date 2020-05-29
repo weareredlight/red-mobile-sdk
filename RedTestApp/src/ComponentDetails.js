@@ -1,22 +1,26 @@
 import React, { useState, useCallback, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import merge from 'lodash/merge'
 import { View, Text, Button } from 'react-native'
 import styles from './ComponentDetailsStyles'
 
 const getComponentPropTypes = ({ propTypes }) =>
-  Object.keys(propTypes).map(key => ({
-    key,
-    ...propTypes[key].info
-  })).sort((a, b) => b.isRequired && !a.isRequired
-    ? 1 : !b.isRequired && a.isRequired
-    ? -1 : b.key > a.key ? -1 : 1)
+  Object.keys(propTypes)
+    .map(key => ({
+      key,
+      ...propTypes[key].info,
+    }))
+    .sort((a, b) =>
+      b.isRequired && !a.isRequired
+        ? 1
+        : !b.isRequired && a.isRequired
+          ? -1
+          : b.key > a.key
+            ? -1
+            : 1,
+    )
 
-const ComponentDetails = ({
-  component,
-  style,
-  defaultProps,
-  iterations,
-}) => {
+const ComponentDetails = ({ component, style, defaultProps, iterations }) => {
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
   const [showIterations, setShowIterations] = useState(false)
@@ -39,38 +43,31 @@ const ComponentDetails = ({
     setShowProps(false)
   }, [showStyles])
 
-  const propTypes = useMemo(
-    () => getComponentPropTypes(component),
-    [component]
-  )
+  const propTypes = useMemo(() => getComponentPropTypes(component), [
+    component,
+  ])
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {component.name}
-      </Text>
+      <Text style={styles.title}>{component.name}</Text>
 
       <View style={styles.section}>
         {renderComponent(component, defaultProps, propTypes, defaultProps)}
       </View>
 
       <View style={styles.buttonsWrapper}>
-        <Button title="Props" onPress={onProps} />
-        <Button title="Styles" onPress={onStyles} />
-        <Button title="Iterations" onPress={onIterations} />
+        <Button title='Props' onPress={onProps} />
+        <Button title='Styles' onPress={onStyles} />
+        <Button title='Iterations' onPress={onIterations} />
       </View>
 
-      {showProps &&
-        <View style={styles.section}>
-          {renderProps(propTypes)}
-        </View>
-      }
+      {showProps && (
+        <View style={styles.section}>{renderProps(propTypes)}</View>
+      )}
 
-      {showStyles &&
-        <View style={styles.section}>
-          {renderStyles(style, 0)}
-        </View>
-      }
+      {showStyles && (
+        <View style={styles.section}>{renderStyles(style, 0)}</View>
+      )}
 
       {showIterations && (
         <View style={styles.section}>
@@ -96,38 +93,40 @@ const renderComponent = (component, renderProps, propTypes, iteration) => {
       <View style={styles.componentContainer}>
         <Comp {...renderProps} />
       </View>
-      {iteration && <Text style={styles.componentIterations}>
-        {JSON.stringify(iteration)
-          .split('":').join('": ')
-          .split(',"').join(', "')}
-      </Text>}
+      {iteration && (
+        <Text style={styles.componentIterations}>
+          {JSON.stringify(iteration)
+            .split('":')
+            .join('": ')
+            .split(',"')
+            .join(', "')}
+        </Text>
+      )}
       {propTypes.map(
         ({ key, isRequired }) =>
-          isRequired && !renderProps[key] &&
+          isRequired &&
+          !renderProps[key] && (
             <Text key={key} style={styles.componentMissingProps}>
               {`Prop '${key}' is required but value is: ${renderProps[key]}`}
             </Text>
+          ),
       )}
     </>
   )
 }
 
-const renderProps = propTypes => propTypes.map((prop, index) => (
-  <View key={prop.key} style={[
-    styles.propContainer,
-    index % 2 === 1 ? { backgroundColor: '#DDDDDD' } : {}
-  ]}>
-    <Text style={styles.propName}>
-      {prop.key}
-    </Text>
-    {prop.isRequired && <Text style={styles.propRequired}>
-      required
-    </Text>}
-    <Text style={styles.propType}>
-      {prop.propTypeName}
-    </Text>
-  </View>
-))
+const darker = { backgroundColor: '#DDDDDD' }
+const renderProps = propTypes =>
+  propTypes.map((prop, index) => (
+    <View
+      key={prop.key}
+      style={[styles.propContainer, index % 2 === 1 ? darker : {}]}
+    >
+      <Text style={styles.propName}>{prop.key}</Text>
+      {prop.isRequired && <Text style={styles.propRequired}>required</Text>}
+      <Text style={styles.propType}>{prop.propTypeName}</Text>
+    </View>
+  ))
 
 const renderStyles = (theme, level) =>
   Object.entries(theme).map(([key, value], index) => {
@@ -138,35 +137,43 @@ const renderStyles = (theme, level) =>
             {key}
             <Text style={styles.propRequired}>
               {'  '}
-              {level === 0 ? 'state' : level === 1 ? 'element' : ''}
+              {level === 0
+                ? 'state'
+                : level === 1
+                  ? 'element'
+                  : key.includes('__')
+                    ? key === '__mixins'
+                      ? 'mixin'
+                      : 'target'
+                    : ''}
             </Text>
           </Text>
           {renderStyles(value, level + 1)}
         </View>
       )
-    } if (typeof value === 'function') {
+    }
+    if (typeof value === 'function') {
       return (
         <View key={key} style={styles.styleContainer}>
-          <Text style={styles.propName}>
-            {key}
-          </Text>
-          <Text style={styles.propType}>
-            {'function()'}
-          </Text>
+          <Text style={styles.propName}>{key}</Text>
+          <Text style={styles.propType}>function()</Text>
         </View>
       )
     } else {
       return (
         <View key={key} style={styles.styleContainer}>
-          <Text style={styles.propName}>
-            {key}
-          </Text>
-          <Text style={styles.propType}>
-            {value}
-          </Text>
+          <Text style={styles.propName}>{key}</Text>
+          <Text style={styles.propType}>{value}</Text>
         </View>
       )
     }
   })
+
+ComponentDetails.propTypes = {
+  component: PropTypes.func.isRequired,
+  style: PropTypes.shape(),
+  defaultProps: PropTypes.shape(),
+  iterations: PropTypes.arrayOf(PropTypes.shape()),
+}
 
 export default ComponentDetails

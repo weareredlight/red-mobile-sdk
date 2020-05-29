@@ -16,12 +16,12 @@ export const defaultTheme = {
       textColor: 'white',
       __android: {
         textColor: 'green',
-      }
+      },
     },
     redishCopy: s => ({
       ...s.themes.redish,
       textColor: 'black',
-    })
+    }),
   },
   components: {},
 }
