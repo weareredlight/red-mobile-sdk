@@ -27,3 +27,5 @@ module.exports = {
 7. run ```yarn ios``` and ```yarn android``` to install the new apps with the assets
 
 8. web should be fine
+
+source: https://bigcheeseapp.com/2020/01/04/using-custom-fonts-in-react-native/
