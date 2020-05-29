@@ -1,4 +1,4 @@
-import { Platform } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import merge from 'lodash/merge'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -19,26 +19,29 @@ const defaultBreakPoints = [
   'gteDesktop',
 ]
 
-
-
 export const createStyles = base => cloneDeep([base])
 
-export const mergeStyles = (theme, styles) => {
+export const mergeStyles = (theme, styles, skipParse) => {
   const mergedStyles = merge({}, ...styles)
-  const parsedStyles = parseThemeDeep(theme, mergedStyles, theme.breakPoints)
-  return parsedStyles
+  if (skipParse)
+    return mergedStyles
+  else
+    return parseThemeDeep(theme, mergedStyles, theme.breakPoints)
 }
 
-export const themeParser = theme => {
-  const { themes, breakPoints } = theme
-  const parsedThemes = parseThemeDeep(theme, themes, breakPoints)
-  return {
-    ...theme,
-    themes: parsedThemes
-  }
+export const themeParser = (theme, selectedTheme) => {
+  const { themes, components, breakPoints } = theme
+  const newTheme = { ...theme }
+
+  // Parse themes and variables
+  newTheme.themes = parseThemeDeep(theme, themes, breakPoints)
+  newTheme.vars = newTheme.themes[selectedTheme]
+
+  // Parse components
+  newTheme.components = parseThemeDeep(newTheme, components, breakPoints)
+
+  return newTheme
 }
-
-
 
 export const needsMoreParsing = data => {
   if (
@@ -73,13 +76,20 @@ export const parseThemeDeep = (theme, list, breakPoints) => {
       } else if (cleanKey === defaultMixin) {
         // Mixins
         const mixinResults = Object.entries(val).map(([mixinName, mixinParams]) => {
-          return theme.mixins[mixinName](theme, ...mixinParams)
+          const mixinFunc = theme.mixins[mixinName]
+          if (mixinFunc) {
+            return mixinFunc(theme, ...mixinParams)
+          } else {
+            throw new Error(
+              `Mixin '${mixinName}' not found. Please check your <ThemeProvider mixins={obj}>`
+            )
+            return {}
+          }
         })
         parseResutl = merge({}, ...mixinResults)
 
       } else if (typeof val === 'function') {
         // 'val' is a function
-        debugger
         parseResutl = flatTheme({ [prop]: getValue })
 
       } else if (typeof val === 'object') {
@@ -100,7 +110,34 @@ export const parseThemeDeep = (theme, list, breakPoints) => {
   return flatTheme(list)
 }
 
-
+export const defaultThemeBuilder = (
+  themeDefaultTemplate,
+  defaultThemeName,
+  breakPoints,
+  variables,
+  themes,
+  components,
+  mixins,
+) => ({
+  ...createStyles(themeDefaultTemplate)[0],
+  ...buildScreen(
+    {
+      window: Dimensions.get('window'),
+      screen: Dimensions.get('screen'),
+    },
+    breakPoints
+  ),
+  themes: {
+    ...themeDefaultTemplate.themes,
+    [defaultThemeName]: {
+      ...themeDefaultTemplate.themes[defaultThemeName],
+      ...variables,
+    },
+    ...themes,
+  },
+  components: merge({}, themeDefaultTemplate.components, components),
+  mixins,
+})
 
 export const buildScreen = ({ window: w, screen: s }, breakPoints) => {
   const [minPhablet, minTablet, minDesktop, minDesktopHD] = breakPoints

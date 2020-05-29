@@ -11,27 +11,25 @@ const Text = ({
   center,
   inline,
   children,
+  skipThemeParsing,
 }) => {
-  const { getStyles, createStyles, mergeStyles } = useTheme()
+  const { getStyles, mergeStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
-    const elementStyle = getStyles('Text')
-    const s = createStyles(elementStyle.default)
+    const parsedTheme = mergeStyles([getStyles('Text'), style || {}], true)
+    const s = [parsedTheme.default]
 
     if (inline)
       s[0].text.width = 'auto'
     if (center)
       s[0].text.textAlign = 'center'
     if (title)
-      s.push(elementStyle.title)
+      s.push(parsedTheme.title)
     if (small)
-      s.push(elementStyle.small)
+      s.push(parsedTheme.small)
 
-    if (style)
-      s.push(style)
-
-    return mergeStyles(s)
-  }, [getStyles, inline, center, title, small, style])
+    return mergeStyles(s, skipThemeParsing)
+  }, [getStyles, style, inline, center, title, small, skipThemeParsing])
 
   return <RNText style={finalStyle.text}>{children}</RNText>
 }
@@ -42,7 +40,8 @@ Text.propTypes = {
   center: PropTypes.bool,
   inline: PropTypes.bool,
   style: PropTypes.shape(),
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
+  skipThemeParsing: PropTypes.bool,
 }
 
 export default Text

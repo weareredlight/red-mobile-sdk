@@ -14,68 +14,7 @@ import Text from './stories/Text';
 import Button from './stories/Button';
 
 const App: () => React$Node = () => (
-  <ThemeProvider
-    breakPoints={[550, 750, 1000, 1400]}
-    variables={{
-      textSize: 24,
-      userColor: 'tomato',
-      userSpecialColor: 'pink',
-      userSpecialColor1: 'red',
-      redishFontWeight: 900,
-      buttonHeight: 200,
-      anotherColor: s => s.themes.default.userSpecialColor,
-      __web: {
-        textSize: 40,
-        __tablet: {
-          textSize: 70,
-        },
-      },
-    }}
-    themes={{
-      redish: {
-        primaryColor: 'red',
-        fontWeight: s => s.themes.default.redishFontWeight,
-        textColor: 'white',
-        __android: {
-          textColor: 'green',
-        }
-      },
-      redishCopy: s => ({
-        ...s.themes.redish,
-        textColor: 'black',
-      })
-    }}
-    components={{
-      Button: {
-        default: {
-          button: {
-            height: s => s.theme.buttonHeight,
-            __lteTablet: {
-              __lteTablet: {
-                __lteTablet: {
-                  height: s => s.theme.buttonHeight / 2,
-                },
-                __mixins: {
-                  bgColor: [],
-                }
-              },
-            },
-          },
-          testElement: () => ({ height: 'TEST ELEMENT' })
-        },
-      },
-    }}
-    mixins={{
-      bgColor: (s) => {
-        return {
-          backgroundColor: 'blue',
-          __gtePhablet: {
-            backgroundColor: x => x.theme.userSpecialColor,
-          },
-        }
-      }
-    }}
-  >
+  <ThemeProvider>
     <SafeAreaView>
       <ScrollView style={styles.scrollView}>
         <View style={styles.sectionContainer}>

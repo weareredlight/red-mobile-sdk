@@ -10,15 +10,17 @@ import { Platform, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import merge from 'lodash/merge'
 
 import {
-  createStyles,
   mergeStyles,
   buildScreen,
   themeParser,
+  defaultThemeBuilder,
 } from './utils'
 
 // ComponentThemes
 import { ButtonStyle } from '../elements/Button/style'
 import { TextStyle } from '../elements/Text/style'
+
+import { defaultTheme } from './defaultTheme'
 
 let renderCount = 1
 
@@ -33,46 +35,26 @@ const themeDefaultTemplate = {
 
   // default theme
   themes: {
-    [defaultThemeName]: {}
-  },
-
-  // Include all components by default
-  components: {
-    'Button': ButtonStyle,
-    'Text': TextStyle,
-  },
-}
-
-const defaultThemeBuilder = (
-  breakPoints,
-  variables,
-  themes,
-  components,
-  mixins,
-) => ({
-  ...createStyles(themeDefaultTemplate)[0],
-  ...buildScreen(
-    {
-      window: Dimensions.get('window'),
-      screen: Dimensions.get('screen'),
-    },
-    breakPoints
-  ),
-  themes: {
-    ...themeDefaultTemplate.themes,
     [defaultThemeName]: {
-      ...themeDefaultTemplate.themes[defaultThemeName],
-      ...variables,
+      ...defaultTheme.variables,
     },
-    ...themes,
+    ...defaultTheme.themes,
   },
-  components: merge({}, themeDefaultTemplate.components, components),
-  mixins,
-})
+
+  // default components
+  components: merge(
+    {},
+    {
+      'Button': ButtonStyle,
+      'Text': TextStyle,
+    },
+    defaultTheme.components,
+  ),
+}
 
 export const ThemeProvider = props => {
   const {
-    breakPoints = [550, 750, 1000, 1400],
+    breakPoints = defaultTheme.breakPoints,
     variables = {},
     themes = {},
     components = {},
@@ -82,6 +64,8 @@ export const ThemeProvider = props => {
   const [selectedTheme, setSelectedTheme] = useState(defaultThemeName)
   const [theme, setTheme] = useState(
     defaultThemeBuilder(
+      themeDefaultTemplate,
+      defaultThemeName,
       breakPoints,
       variables,
       themes,
@@ -102,27 +86,36 @@ export const ThemeProvider = props => {
 
   const themeContext = useMemo(
     () => {
-      const parsedTheme = themeParser(theme)
-      const simplifiedTheme = {
-        ...parsedTheme,
-        themes: [], // remove access to all themes
-        theme: parsedTheme.themes[selectedTheme],
-      }
+      const parsedTheme = themeParser(theme, selectedTheme)
+      console.log('========== DEBUG: parsedTheme', parsedTheme)
 
       return {
-        // theme object
-        theme: simplifiedTheme,
-        // functions
-        createStyles,
-        getStyles: compName => simplifiedTheme.components[compName],
-        mergeStyles: s => mergeStyles(simplifiedTheme, s),
-        setTheme: themeName => Object.keys(parsedTheme.themes).includes(themeName) && setSelectedTheme(themeName),
+        // simplified theme
+        theme: parsedTheme,
+
+        // return a component styles object
+        getStyles: compName => parsedTheme.components[compName],
+
+        // merge stylesList into one object. can skip parsing with skipParse
+        mergeStyles: (stylesList, skipParse) => mergeStyles(parsedTheme, stylesList, skipParse),
+
+        // change theme
+        setTheme: themeName =>
+          Object.keys(parsedTheme.themes).includes(themeName) && setSelectedTheme(themeName),
+
+        // change var in current theme
+        setVar: (varName, val) =>
+          updateTheme({ themes: { [selectedTheme]: { [varName]: val } } }),
+
+        // change var in default theme or themeName
+        setVarOnTheme: (varName, val, themeName) =>
+          updateTheme({ themes: { [(themeName || defaultThemeName)]: { [varName]: val } } }),
       }
     },
     [theme, selectedTheme]
   )
 
-  console.info("Render count:", renderCount++)
+  console.log("Render count:", renderCount++)
   return <ThemeContext.Provider value={themeContext} {...props} />
 }
 

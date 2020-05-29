@@ -6,12 +6,12 @@ export const TextStyle = {
       paddingVertical: 2,
       paddingHorizontal: 8,
       color: "#000000",
-      fontSize: s => s.theme.textSize,
+      fontSize: t => t.vars.textSize,
     },
   },
   title: {
     text: {
-      fontSize: 24,
+      fontSize: t => t.vars.textSize,
       fontWeight: '500'
     },
   },

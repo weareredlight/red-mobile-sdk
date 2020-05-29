@@ -11,7 +11,7 @@ const TextStory = () => {
       component={Text}
       style={TextStyle}
       defaultProps={{
-        style: { text: { backgroundColor: 'pink' } },
+        style: { default: { text: { backgroundColor: 'pink' } } },
         children: 'This is text'
       }}
       iterations={[
@@ -22,19 +22,21 @@ const TextStory = () => {
         {
           children: 'with style',
           style: {
-            text: {
-              color: 'red',
-              textAlign: 'right',
-              __ltePhablet: {
-                color: 'green',
+            default: {
+              text: {
+                color: 'red',
+                textAlign: 'right',
+                __ltePhablet: {
+                  color: 'green',
+                },
+                __gteDesktop: {
+                  color: 'blue'
+                },
+                __isLandscape: {
+                  color: 'white',
+                },
               },
-              __gteDesktop: {
-                color: 'blue'
-              },
-              __isLandscape: {
-                color: 'white',
-              },
-            },
+            }
           }
         },
       ]}

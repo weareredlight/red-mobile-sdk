@@ -21,7 +21,7 @@ export const ButtonStyle = {
 
   primary: {
     button: {
-      backgroundColor: s => s.theme.userColor,
+      backgroundColor: t => t.vars.userColor,
     },
     text: {
       color: 'white',

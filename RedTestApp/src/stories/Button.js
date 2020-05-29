@@ -23,19 +23,21 @@ const ButtonStory = () => {
         {
           title: 'with style',
           style: {
-            text: {
-              color: 'red',
-              __ltePhablet: {
-                color: 'green',
+            default: {
+              text: {
+                color: 'red',
+                __ltePhablet: {
+                  color: 'green',
+                },
+                __gteDesktop: {
+                  color: 'blue'
+                },
               },
-              __gteDesktop: {
-                color: 'blue'
-              },
+              button: {
+                backgroundColor: t => t.vars.anotherColor,
+                borderWidth: 2,
+              }
             },
-            button: {
-              backgroundColor: s => s.theme.anotherColor,
-              borderWidth: 2,
-            }
           }
         },
       ]}
