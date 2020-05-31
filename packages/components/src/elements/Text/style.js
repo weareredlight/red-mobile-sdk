@@ -7,33 +7,30 @@ export const TextStyle = {
         fontFamily: vars.text.fontFamily,
         fontSize: vars.text.fontSize,
         color: vars.text.color,
-        padding: vars.spacing.xl,
+        padding: vars.spacing.s,
       })]
     },
   },
   h1: {
     text: {
-      fontWeight: '900',
+      __fun: [({ vars }) => ({
+        fontFamily: vars.text.fontFamilyBold,
+        fontSize: vars.text.fontSize * 2.4,
+        paddingTop: vars.spacing.l,
+      })]
     },
-    __fun: [({ vars }) => ({
-      text: {
-        __ios: {
-          color: 'yellow'
-        }
-      }
-    })]
   },
   h2: {
     text: {
-      fontWeight: '500',
       __fun: [({ vars }) => ({
+        fontFamily: vars.text.fontFamilyBold,
         fontSize: vars.text.fontSize * 1.8,
+        paddingTop: vars.spacing.m,
       })]
     },
   },
   h3: {
     text: {
-      fontWeight: '500',
       __fun: [({ vars }) => ({
         fontSize: vars.text.fontSize * 1.4,
       })]
@@ -42,8 +39,7 @@ export const TextStyle = {
   small: {
     text: {
       __fun: [({ vars }) => ({
-        fontFamily: vars.text.fontFamilySmall,
-        fontSize: vars.text.fontSize * 0.9,
+        fontSize: vars.text.fontSize * 0.8,
       })]
     },
   },

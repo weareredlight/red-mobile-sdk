@@ -119,7 +119,6 @@ export const ThemeProvider = props => {
     [theme, selectedTheme],
   )
 
-  console.log('Render count:', renderCount++)
   return <ThemeContext.Provider value={themeContext} {...props} />
 }
 

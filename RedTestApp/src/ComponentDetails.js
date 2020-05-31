@@ -4,6 +4,8 @@ import merge from 'lodash/merge'
 import { View, Text, Button } from 'react-native'
 import styles from './ComponentDetailsStyles'
 
+import { useTheme } from 'components'
+
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes)
     .map(key => ({
@@ -20,10 +22,11 @@ const getComponentPropTypes = ({ propTypes }) =>
             : 1,
     )
 
-const ComponentDetails = ({ component, style, defaultProps, iterations }) => {
+const ComponentDetails = ({ component, defaultProps, iterations }) => {
+  const { getStyles } = useTheme()
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
-  const [showIterations, setShowIterations] = useState(true)
+  const [showIterations, setShowIterations] = useState(false)
 
   const onIterations = useCallback(() => {
     setShowIterations(!showIterations)
@@ -66,7 +69,7 @@ const ComponentDetails = ({ component, style, defaultProps, iterations }) => {
       )}
 
       {showStyles && (
-        <View style={styles.section}>{renderStyles(style, 0)}</View>
+        <View style={styles.section}>{renderStyles(getStyles(component.name), 0)}</View>
       )}
 
       {showIterations && iterations && (
@@ -128,46 +131,45 @@ const renderProps = propTypes =>
     </View>
   ))
 
-const renderStyles = (theme, level) =>
-  Object.entries(theme).map(([key, value], index) => {
-    if (typeof value === 'object') {
-      return (
-        <View key={key} style={styles.styleKey}>
+const renderStyles = (theme, level) => {
+  return Object.entries(theme).map(([key, value], index) => {
+    let keyToPrint = key
+    let valueToPrint = value
+    let labelToPrint = level === 0 ? 'state' : level === 1 ? 'element' : ''
+    let chidlrenToPrint = null
+
+    if (key.startsWith('__fun')) {
+      labelToPrint = `${value.length}`
+      valueToPrint = `[ ${value.map(fun => `f() `)}]`
+    } else if (key.startsWith('__mixins')) {
+      labelToPrint = `${Object.entries(value).length}`
+      valueToPrint = `${Object.entries(value).map(([k]) => `${k}()`)}`
+    } else if (key.startsWith('__') || typeof value === 'object') {
+      valueToPrint = null
+      chidlrenToPrint = renderStyles(value, level + 1)
+    }
+
+    return (
+      <View key={key} style={styles.styleContainer}>
+        <View
+          key={key}
+          style={[styles.styleHeader, index % 2 === 1 && level > 1 ? darker : {}]}
+        >
           <Text style={styles.propName}>
-            {key}
-            <Text style={styles.propRequired}>
-              {'  '}
-              {level === 0
-                ? 'state'
-                : level === 1
-                  ? 'element'
-                  : key.includes('__')
-                    ? key === '__mixins'
-                      ? 'mixin'
-                      : 'target'
-                    : ''}
-            </Text>
+            {keyToPrint}
+            {labelToPrint && labelToPrint.length > 0 &&
+              <Text style={styles.propRequired}>
+                {'  ' + labelToPrint}
+              </Text>
+            }
           </Text>
-          {renderStyles(value, level + 1)}
+          <Text style={styles.propType}>{valueToPrint}</Text>
         </View>
-      )
-    }
-    if (typeof value === 'function') {
-      return (
-        <View key={key} style={styles.styleContainer}>
-          <Text style={styles.propName}>{key}</Text>
-          <Text style={styles.propType}>function()</Text>
-        </View>
-      )
-    } else {
-      return (
-        <View key={key} style={styles.styleContainer}>
-          <Text style={styles.propName}>{key}</Text>
-          <Text style={styles.propType}>{value}</Text>
-        </View>
-      )
-    }
+        {chidlrenToPrint && chidlrenToPrint}
+      </View>
+    )
   })
+}
 
 ComponentDetails.propTypes = {
   component: PropTypes.func.isRequired,

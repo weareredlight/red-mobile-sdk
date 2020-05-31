@@ -6,8 +6,10 @@ import { useTheme } from '../../theme'
 
 const Button = ({
   inline,
-  primary,
-  secondary,
+  success,
+  error,
+  warning,
+  info,
   transparent,
   disabled,
   style,
@@ -23,11 +25,17 @@ const Button = ({
     if (inline) {
       s[0].button.width = undefined
     }
-    if (primary) {
-      s.push(theme.primary)
+    if (success) {
+      s.push(theme.success)
     }
-    if (secondary) {
-      s.push(theme.secondary)
+    if (error) {
+      s.push(theme.error)
+    }
+    if (warning) {
+      s.push(theme.warning)
+    }
+    if (info) {
+      s.push(theme.info)
     }
     if (transparent) {
       s.push(theme.transparent)
@@ -37,7 +45,7 @@ const Button = ({
     }
 
     return mergeStyles(s)
-  }, [style, inline, primary, secondary, transparent, disabled])
+  }, [style, inline, success, error, warning, info, transparent, disabled])
 
   return (
     <TouchableOpacity
@@ -52,8 +60,10 @@ const Button = ({
 
 Button.propTypes = {
   inline: PropTypes.bool,
-  primary: PropTypes.bool,
-  secondary: PropTypes.bool,
+  success: PropTypes.bool,
+  error: PropTypes.bool,
+  warning: PropTypes.bool,
+  info: PropTypes.bool,
   transparent: PropTypes.bool,
   disabled: PropTypes.bool,
   style: PropTypes.shape(),

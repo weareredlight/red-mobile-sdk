@@ -1,37 +1,13 @@
 export const defaultTheme = {
   breakPoints: [550, 750, 1000, 1400],
   variables: {
+    borderRadius: 4,
     text: {
-      fontSize: 14,
-      fontFamily: 'Inter-ExtraLightBETA',
+      fontSize: 16,
+      fontFamily: 'Inter-LightBETA',
       fontFamilyBold: 'Inter-Bold',
       fontFamilySmall: 'Inter-Medium',
-      __fun: [
-        ({ vars }) => ({
-          color: vars.colors.textColor,
-        }),
-        ({ vars }) => ({
-          color1: vars.colors.textColor,
-        })
-      ],
-      __ios: {
-        color2: 'blue'
-      },
-      __web: {
-        color3: 'green'
-      },
-      '__ios|__web': {
-        color4: 'red'
-      },
-      '__web&__phone': {
-        color5: 'pink'
-      },
-      '__desktop&__ios|__web': {
-        color6: 'cyan'
-      },
-      '__desktop|__web&__ios': {
-        color7: 'purple'
-      },
+      __fun: [({ vars }) => ({ color: vars.colors.textColor })],
     },
     spacing: {
       basicSpacingUnit: 2,
@@ -55,29 +31,6 @@ export const defaultTheme = {
       green: '#49DCB1',
       blue: '#6DCEDD',
       yellow: '#FFDF80',
-    }
-  },
-  themes: {},
-  components: {
-    Text: {
-      default: {
-        text: {
-          color: 'pink',
-          __fun: [({ vars }) => ({
-            fontSize: vars.text.fontSize,
-          })]
-        }
-      },
-      h1: {
-        text: {
-          color: 'red',
-        },
-        __fun: [({ vars }) => ({
-          text: {
-            fontSize: vars.text.fontSize * 2,
-          }
-        })]
-      }
     }
   },
 }

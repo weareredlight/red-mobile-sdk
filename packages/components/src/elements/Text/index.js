@@ -19,7 +19,6 @@ const Text = ({
 
   const finalStyle = useMemo(() => {
     const theme = mergeWithComponentStyles('Text', style)
-    console.log('DEBUG: finalStyle -> theme', theme)
     const s = [theme.default]
 
     if (inline) {

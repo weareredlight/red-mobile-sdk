@@ -10,45 +10,12 @@ import { default as ButtonStory } from './stories/Button'
 
 const App = () => (
   <ThemeProvider
-    components={{
-      Text: {
-        default: {
-          text: {
-            __web: {
-              __web: {
-                __web: {
-                  __web: {
-                    __web: {
-                      backgroundColor: 'green'
-                    } 
-                  }
-                }
-              }
-            },
-            color: 'green',
-            __fun: [({ vars }) => ({
-              fontSize: vars.text.fontSize * 10,
-              __web: {
-                __web: {
-                  __web: {
-                    backgroundColor: 'green'
-                  } 
-                }
-              },
-            })]
-          }
-        },
-        h1: {
-          text: {
-            color: 'blue',
-          },
-          __fun: [({ vars }) => ({
-            text: {
-              fontSize: vars.text.fontSize * 10,
-            }
-          })]
-        }
-      }
+    variables={{
+      variableFromAppJS: true,
+    }}
+    mixins={{
+      getX: ({ vars }) =>
+        ({ variableFromMixin: vars.variableFromAppJS })
     }}
   >
     <SafeAreaView>

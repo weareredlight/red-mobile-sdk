@@ -4,38 +4,54 @@ export const ButtonStyle = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 6,
       minWidth: 100,
       width: '96%',
-      paddingVertical: 12,
-      paddingHorizontal: 24,
-      marginVertical: 8,
       marginHorizontal: '2%',
-      backgroundColor: 'blue',
+      __fun: [({ vars }) => ({
+        borderRadius: vars.borderRadius,
+        paddingVertical: vars.spacing.m,
+        paddingHorizontal: vars.spacing.xl,
+        marginVertical: vars.spacing.m,
+        backgroundColor: vars.colors.primary,
+      })],
     },
     text: {
-      color: 'white',
-      fontSize: 16,
+      __fun: [({ vars }) => ({
+        color: vars.colors.white,
+        fontSize: vars.text.fontSize,
+      })],
     },
   },
 
-  primary: {
+  success: {
     button: {
       __fun: [({ vars }) => ({
-        backgroundColor: vars.userColor,
+        backgroundColor: vars.colors.green,
       })]
-    },
-    text: {
-      color: 'white',
     },
   },
 
-  secondary: {
+  error: {
     button: {
-      backgroundColor: 'tomato',
+      __fun: [({ vars }) => ({
+        backgroundColor: vars.colors.red,
+      })]
     },
-    text: {
-      color: 'white',
+  },
+
+  warning: {
+    button: {
+      __fun: [({ vars }) => ({
+        backgroundColor: vars.colors.yellow,
+      })]
+    },
+  },
+
+  info: {
+    button: {
+      __fun: [({ vars }) => ({
+        backgroundColor: vars.colors.blue,
+      })]
     },
   },
 
@@ -44,25 +60,22 @@ export const ButtonStyle = {
       backgroundColor: 'transparent',
     },
     text: {
-      color: 'black',
+      __fun: [({ vars }) => ({
+        color: vars.text.color,
+      })]
     },
   },
 
   disabled: {
     button: {
-      backgroundColor: 'grey',
-      __web: {
-        backgroundColor: 'purple',
-      },
-      __ios: {
-        backgroundColor: 'yellow',
-      },
-      __android: {
-        backgroundColor: 'green',
-      },
+      __fun: [({ vars }) => ({
+        backgroundColor: vars.colors.muted,
+      })]
     },
     text: {
-      color: 'black',
+      __fun: [({ vars }) => ({
+        color: vars.text.color,
+      })]
     },
   },
 }
