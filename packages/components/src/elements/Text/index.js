@@ -5,19 +5,22 @@ import { Text as RNText } from 'react-native'
 import { useTheme } from '../../theme'
 
 const Text = ({
-  title,
+  h1,
+  h2,
+  h3,
   small,
+  muted,
   style,
   center,
   inline,
   children,
-  skipThemeParsing,
 }) => {
-  const { getStyles, mergeStyles } = useTheme()
+  const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
-    const parsedTheme = mergeStyles([getStyles('Text'), style || {}], true)
-    const s = [parsedTheme.default]
+    const theme = mergeWithComponentStyles('Text', style)
+    console.log('DEBUG: finalStyle -> theme', theme)
+    const s = [theme.default]
 
     if (inline) {
       s[0].text.width = 'auto'
@@ -25,27 +28,38 @@ const Text = ({
     if (center) {
       s[0].text.textAlign = 'center'
     }
-    if (title) {
-      s.push(parsedTheme.title)
+    if (h1) {
+      s.push(theme.h1)
+    }
+    if (h2) {
+      s.push(theme.h2)
+    }
+    if (h3) {
+      s.push(theme.h3)
     }
     if (small) {
-      s.push(parsedTheme.small)
+      s.push(theme.small)
+    }
+    if (muted) {
+      s.push(theme.muted)
     }
 
-    return mergeStyles(s, skipThemeParsing)
-  }, [getStyles, style, inline, center, title, small, skipThemeParsing])
+    return mergeStyles(s)
+  }, [style, inline, center, h1, h2, h3, muted, small])
 
   return <RNText style={finalStyle.text}>{children}</RNText>
 }
 
 Text.propTypes = {
-  title: PropTypes.bool,
+  h1: PropTypes.bool,
+  h2: PropTypes.bool,
+  h3: PropTypes.bool,
+  muted: PropTypes.bool,
   small: PropTypes.bool,
   center: PropTypes.bool,
   inline: PropTypes.bool,
   style: PropTypes.shape(),
   children: PropTypes.any.isRequired,
-  skipThemeParsing: PropTypes.bool,
 }
 
 export default Text

@@ -12,6 +12,7 @@ import merge from 'lodash/merge'
 
 import {
   mergeStyles,
+  mergeWithComponentStyles,
   buildScreen,
   themeParser,
   defaultThemeBuilder,
@@ -30,10 +31,6 @@ const ThemeContext = createContext()
 const defaultThemeName = 'default'
 
 const themeDefaultTemplate = {
-  breakPoints: {}, // filled on load
-  screen: {}, // filled on load
-  window: {}, // filled on load
-
   // default theme
   themes: {
     [defaultThemeName]: {
@@ -41,22 +38,18 @@ const themeDefaultTemplate = {
     },
     ...defaultTheme.themes,
   },
-
   // default components
-  components: merge(
-    {},
-    {
-      Button: ButtonStyle,
-      Text: TextStyle,
-    },
-    defaultTheme.components,
-  ),
+  defaultThemeComponents: defaultTheme.components,
+  originalComponents: {
+    Button: ButtonStyle,
+    Text: TextStyle,
+  },
 }
 
 export const ThemeProvider = props => {
   const {
     breakPoints = defaultTheme.breakPoints,
-    variables = {},
+    variables = null,
     themes = {},
     components = {},
     mixins = {},
@@ -67,6 +60,7 @@ export const ThemeProvider = props => {
     defaultThemeBuilder(
       themeDefaultTemplate,
       defaultThemeName,
+      selectedTheme,
       breakPoints,
       variables,
       themes,
@@ -88,17 +82,26 @@ export const ThemeProvider = props => {
   const themeContext = useMemo(
     () => {
       const parsedTheme = themeParser(theme, selectedTheme)
-      console.log('========== DEBUG: parsedTheme', parsedTheme)
+      console.log('DEBUG: parsedTheme', parsedTheme)
 
       return {
-        // simplified theme
         theme: parsedTheme,
 
         // return a component styles object
         getStyles: compName => parsedTheme.components[compName],
 
-        // merge stylesList into one object. can skip parsing with skipParse
-        mergeStyles: (stylesList, skipParse) => mergeStyles(parsedTheme, stylesList, skipParse),
+        // merges an array of style objects into a final object
+        // we can change this function later and keep compatibility
+        mergeStyles: stylesList => mergeStyles(stylesList),
+
+        // merge component specific styles with the already calculated component styles
+        mergeWithComponentStyles: (compName, style) =>
+          mergeWithComponentStyles(
+            parsedTheme,
+            compName,
+            parsedTheme.components[compName],
+            style,
+          ),
 
         // change theme
         setTheme: themeName =>
@@ -109,7 +112,7 @@ export const ThemeProvider = props => {
           updateTheme({ themes: { [selectedTheme]: { [varName]: val } } }),
 
         // change var in default theme or themeName
-        setVarOnTheme: (varName, val, themeName) =>
+        setVarOnTheme: (themeName, varName, val) =>
           updateTheme({ themes: { [(themeName || defaultThemeName)]: { [varName]: val } } }),
       }
     },

@@ -21,7 +21,9 @@ export const ButtonStyle = {
 
   primary: {
     button: {
-      backgroundColor: t => t.vars.userColor,
+      __fun: [({ vars }) => ({
+        backgroundColor: vars.userColor,
+      })]
     },
     text: {
       color: 'white',

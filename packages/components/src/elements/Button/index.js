@@ -13,32 +13,31 @@ const Button = ({
   style,
   onPress,
   title,
-  skipThemeParsing,
 }) => {
-  const { getStyles, mergeStyles } = useTheme()
+  const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
-    const parsedTheme = mergeStyles([getStyles('Button'), style || {}], true)
-    const s = [parsedTheme.default]
+    const theme = mergeWithComponentStyles('Button', style)
+    const s = [theme.default]
 
     if (inline) {
       s[0].button.width = undefined
     }
     if (primary) {
-      s.push(parsedTheme.primary)
+      s.push(theme.primary)
     }
     if (secondary) {
-      s.push(parsedTheme.secondary)
+      s.push(theme.secondary)
     }
     if (transparent) {
-      s.push(parsedTheme.transparent)
+      s.push(theme.transparent)
     }
     if (disabled) {
-      s.push(parsedTheme.disabled)
+      s.push(theme.disabled)
     }
 
-    return mergeStyles(s, skipThemeParsing)
-  }, [getStyles, style, inline, primary, secondary, transparent, disabled, skipThemeParsing])
+    return mergeStyles(s)
+  }, [style, inline, primary, secondary, transparent, disabled])
 
   return (
     <TouchableOpacity
@@ -60,7 +59,6 @@ Button.propTypes = {
   style: PropTypes.shape(),
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  skipThemeParsing: PropTypes.bool,
 }
 
 export default Button

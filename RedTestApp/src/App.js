@@ -2,14 +2,55 @@ import React from 'react'
 import { SafeAreaView, ScrollView, View, Text } from 'react-native'
 
 // Theme provider
-import { ThemeProvider } from 'components'
+import ThemeProvider from 'components/lib/theme'
 
 // Stories
 import { default as TextStory } from './stories/Text'
 import { default as ButtonStory } from './stories/Button'
 
 const App = () => (
-  <ThemeProvider>
+  <ThemeProvider
+    components={{
+      Text: {
+        default: {
+          text: {
+            __web: {
+              __web: {
+                __web: {
+                  __web: {
+                    __web: {
+                      backgroundColor: 'green'
+                    } 
+                  }
+                }
+              }
+            },
+            color: 'green',
+            __fun: [({ vars }) => ({
+              fontSize: vars.text.fontSize * 10,
+              __web: {
+                __web: {
+                  __web: {
+                    backgroundColor: 'green'
+                  } 
+                }
+              },
+            })]
+          }
+        },
+        h1: {
+          text: {
+            color: 'blue',
+          },
+          __fun: [({ vars }) => ({
+            text: {
+              fontSize: vars.text.fontSize * 10,
+            }
+          })]
+        }
+      }
+    }}
+  >
     <SafeAreaView>
       <ScrollView style={styles.scrollView}>
         <View style={styles.sectionContainer}>

@@ -23,7 +23,7 @@ const getComponentPropTypes = ({ propTypes }) =>
 const ComponentDetails = ({ component, style, defaultProps, iterations }) => {
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
-  const [showIterations, setShowIterations] = useState(false)
+  const [showIterations, setShowIterations] = useState(true)
 
   const onIterations = useCallback(() => {
     setShowIterations(!showIterations)
@@ -69,7 +69,7 @@ const ComponentDetails = ({ component, style, defaultProps, iterations }) => {
         <View style={styles.section}>{renderStyles(style, 0)}</View>
       )}
 
-      {showIterations && (
+      {showIterations && iterations && (
         <View style={styles.section}>
           {iterations.map((iteration, index) => {
             const finalProps = merge({}, defaultProps, iteration)

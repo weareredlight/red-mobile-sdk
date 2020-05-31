@@ -34,8 +34,10 @@ const ButtonStory = () => {
                 },
               },
               button: {
-                backgroundColor: t => t.vars.anotherColor,
                 borderWidth: 2,
+                __fun: [({ vars }) => ({
+                  backgroundColor: vars.anotherColor,
+                })]
               },
             },
           },
