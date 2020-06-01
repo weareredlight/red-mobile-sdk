@@ -10,5 +10,6 @@
     "prop-types": ">= 15.7.2 < 16",
     "react": ">=16.13.1 < 17",
     "react-native": ">= 0.62 < 0.70"
-  }
+  },
+  "gitHead": "53342277f670d07a18aea9bf068a80bf8fdee2e6"
 }
