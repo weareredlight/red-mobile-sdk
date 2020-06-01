@@ -1,6 +1,6 @@
 {
   "name": "@redlightsoftware/components",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "lib/index.js",
   "dependencies": {
     "lodash": "^4.17.15",
