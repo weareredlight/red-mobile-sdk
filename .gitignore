@@ -1,6 +1,7 @@
 .log
 .DS_Store
 .jest-*
+.eslintcache
 lib
 node_modules
 *.code-workspace

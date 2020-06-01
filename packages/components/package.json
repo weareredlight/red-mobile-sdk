@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "main": "lib/index.js",
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.11.0",
-    "react-native": "^0.62.2"
+    "lodash": "^4.17.15",
+    "obj-flatten": "^2.0.4"
   },
   "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.11.0",
-    "react-native": "^0.62.2"
+    "prop-types": ">= 15.7.2 < 16",
+    "react": ">=16.13.1 < 17",
+    "react-native": ">= 0.62 < 0.70"
   }
 }

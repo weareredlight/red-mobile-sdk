@@ -1,47 +1,75 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Text as RNText } from 'react-native'
 
-// // Elements && styles
-// import styles from '../styles'
+import { useTheme } from '../../theme'
 
-const Text = ({ title, small, style, center, noWide, children }) => {
-  let textStyles = { ...localStyles.text }
-  if (title) textStyles = { ...textStyles, ...localStyles.textTitle }
-  if (small) textStyles = { ...textStyles, ...localStyles.textSmall }
-  if (noWide) textStyles.width = 'auto'
-  if (center) textStyles.textAlign = 'center'
-  textStyles = { ...textStyles, ...style }
+const Text = ({
+  h1,
+  h2,
+  h3,
+  small,
+  muted,
+  style,
+  center,
+  inline,
+  children,
+}) => {
+  const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
-  return <RNText style={textStyles}>{children}</RNText>
+  const finalStyle = useMemo(() => {
+    const compTheme = mergeWithComponentStyles('Text', style)
+    const s = [compTheme.default]
+
+    if (inline) {
+      s[0].text.width = 'auto'
+    }
+    if (center) {
+      s[0].text.textAlign = 'center'
+    }
+    if (h1) {
+      s.push(compTheme.h1)
+    }
+    if (h2) {
+      s.push(compTheme.h2)
+    }
+    if (h3) {
+      s.push(compTheme.h3)
+    }
+    if (small) {
+      s.push(compTheme.small)
+    }
+    if (muted) {
+      s.push(compTheme.muted)
+    }
+
+    return mergeStyles(s)
+  }, [
+    mergeWithComponentStyles,
+    mergeStyles,
+    style,
+    inline,
+    center,
+    h1,
+    h2,
+    h3,
+    muted,
+    small,
+  ])
+
+  return <RNText style={finalStyle.text}>{children}</RNText>
 }
 
 Text.propTypes = {
-  title: PropTypes.bool,
+  h1: PropTypes.bool,
+  h2: PropTypes.bool,
+  h3: PropTypes.bool,
+  muted: PropTypes.bool,
   small: PropTypes.bool,
   center: PropTypes.bool,
-  noWide: PropTypes.bool,
+  inline: PropTypes.bool,
   style: PropTypes.shape(),
-  children: PropTypes.any.isRequired
-}
-
-export const localStyles = {
-  text: {
-    flexWrap: 'wrap',
-    width: '100%',
-    paddingVertical: 2,
-    paddingHorizontal: 8,
-    color: "#000000",
-    fontSize: 18
-  },
-  textTitle: {
-    fontSize: 24,
-    fontWeight: '500'
-  },
-  textSmall: {
-    fontSize: 12,
-    fontWeight: '100'
-  }
+  children: PropTypes.any.isRequired,
 }
 
 export default Text

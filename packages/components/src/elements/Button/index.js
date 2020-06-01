@@ -1,102 +1,85 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { TouchableOpacity, Text } from 'react-native'
 
-// Elements && styles
-// import styles from '../styles'
+import { useTheme } from '../../theme'
 
-const Button = props => {
-  let finalTouchableStyles = { ...localStyles.button }
-  let finalTextStyles = { ...localStyles.text }
+const Button = ({
+  inline,
+  success,
+  error,
+  warning,
+  info,
+  transparent,
+  disabled,
+  style,
+  onPress,
+  title,
+}) => {
+  const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
-  if (props.noWide) finalTouchableStyles.width = undefined
+  const finalStyle = useMemo(() => {
+    const compTheme = mergeWithComponentStyles('Button', style)
+    const s = [compTheme.default]
 
-  if (props.primary) {
-    finalTouchableStyles = {
-      ...finalTouchableStyles,
-      ...localStyles.buttonPrimary
+    if (inline) {
+      s[0].button.width = undefined
     }
-    finalTextStyles = { ...finalTextStyles, ...localStyles.textPrimary }
-  }
-  if (props.secondary) {
-    finalTouchableStyles = {
-      ...finalTouchableStyles,
-      ...localStyles.buttonSecondary
+    if (success) {
+      s.push(compTheme.success)
     }
-    finalTextStyles = { ...finalTextStyles, ...localStyles.textSecondary }
-  }
-  if (props.transparent) {
-    finalTouchableStyles = {
-      ...finalTouchableStyles,
-      ...localStyles.buttonTransparent
+    if (error) {
+      s.push(compTheme.error)
     }
-    finalTextStyles = { ...finalTextStyles, ...localStyles.textTransparent }
-  }
-  if (props.disabled) {
-    finalTouchableStyles = {
-      ...finalTouchableStyles,
-      ...localStyles.buttonDisabled,
-      backgroundColor: props.transparent
-        ? 'transparent'
-        : 'grey'
+    if (warning) {
+      s.push(compTheme.warning)
     }
-    finalTextStyles = { ...finalTextStyles, ...localStyles.textDisabled }
-  }
+    if (info) {
+      s.push(compTheme.info)
+    }
+    if (transparent) {
+      s.push(compTheme.transparent)
+    }
+    if (disabled) {
+      s.push(compTheme.disabled)
+    }
 
-  finalTouchableStyles = { ...finalTouchableStyles, ...props.style }
+    return mergeStyles(s)
+  }, [
+    mergeWithComponentStyles,
+    mergeStyles,
+    style,
+    inline,
+    success,
+    error,
+    warning,
+    info,
+    transparent,
+    disabled,
+  ])
 
   return (
     <TouchableOpacity
-      style={finalTouchableStyles}
-      onPress={props.onPress}
-      disabled={props.disabled}
+      onPress={onPress}
+      disabled={disabled}
+      style={finalStyle.button}
     >
-      <Text style={finalTextStyles}>{props.title}</Text>
+      <Text style={finalStyle.text}>{title}</Text>
     </TouchableOpacity>
   )
 }
 
 Button.propTypes = {
-  noWide: PropTypes.bool,
-  primary: PropTypes.bool,
-  secondary: PropTypes.bool,
+  inline: PropTypes.bool,
+  success: PropTypes.bool,
+  error: PropTypes.bool,
+  warning: PropTypes.bool,
+  info: PropTypes.bool,
   transparent: PropTypes.bool,
   disabled: PropTypes.bool,
   style: PropTypes.shape(),
   onPress: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired
-}
-
-export const localStyles = {
-  button: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 6,
-    minWidth: 100,
-    width: '96%',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginVertical: 8,
-    marginHorizontal: '2%',
-    backgroundColor: 'blue'
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-  },
-
-  buttonPrimary: { backgroundColor: 'green' },
-  textPrimary: { color: 'white' },
-
-  buttonSecondary: { backgroundColor: 'yellow' },
-  textSecondary: { color: 'white' },
-
-  buttonTransparent: { backgroundColor: 'transparent' },
-  textTransparent: { color: 'black' },
-
-  buttonDisabled: { backgroundColor: 'grey' },
-  textDisabled: { color: 'black' },
+  title: PropTypes.string.isRequired,
 }
 
 export default Button

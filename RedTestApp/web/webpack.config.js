@@ -1,8 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const rootDir = path.resolve(__dirname, '../');
-const webpackEnv = process.env.NODE_ENV || 'development';
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const rootDir = path.resolve(__dirname, '../')
+const webpackEnv = process.env.NODE_ENV || 'development'
 
 module.exports = {
   mode: webpackEnv,
@@ -28,29 +28,20 @@ module.exports = {
           options: {
             cacheDirectory: true,
             presets: ['react-native'],
-            plugins: [
-              ['react-native-web'],
-              ['module-resolver',
-                {
-                  alias: {
-                    'red-mobile-sdk/components': path.join(rootDir, '../packages/components'),
-                  },
-                },
-              ],
-            ]
-          }
-        }
+            plugins: [['react-native-web']],
+          },
+        },
       },
       {
         test: /\.(gif|jpe?g|png|svg)$/,
         use: {
           loader: 'url-loader',
           options: {
-            name: '[name].[ext]'
-          }
-        }
-      }
-    ]
+            name: '[name].[ext]',
+          },
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -59,22 +50,17 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    extensions: [
-      '.web.jsx',
-      '.web.js',
-      '.jsx',
-      '.js',
-    ],
+    extensions: ['.web.jsx', '.web.js', '.jsx', '.js'],
     alias: {
+      react: path.resolve('./node_modules/react'),
       'react-native$': path.resolve(rootDir, 'node_modules/react-native-web'),
     },
   },
   devServer: {
-    writeToDisk: true,
     index: 'index.html',
     contentBase: path.join(rootDir, 'dist'),
     host: '0.0.0.0',
     port: 3000,
     hot: true,
-  }
-};
+  },
+}

@@ -7,16 +7,18 @@ module.exports = api => {
   return {
     presets: [
       '@babel/preset-env',
-      '@babel/preset-react'
+      '@babel/preset-react',
     ],
-    ...(isDev ? { plugins: [
-      ['module-resolver',
-        {
-          alias: {
-            'prop-types': RedTestAppPath,
+    ...(isDev ? {
+      plugins: [
+        ['module-resolver',
+          {
+            alias: {
+              'prop-types': RedTestAppPath,
+            },
           },
-        },
+        ],
       ],
-    ]} : {})
+    } : {}),
   }
 }
