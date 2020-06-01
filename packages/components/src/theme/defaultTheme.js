@@ -31,6 +31,50 @@ export const defaultTheme = {
       green: '#49DCB1',
       blue: '#6DCEDD',
       yellow: '#FFDF80',
+    },
+    helpers: {
+      __fun: [({ vars }) => {
+        const unit = vars.spacing.basicSpacingUnit
+        const data = {
+          p: 'padding',
+          pT: 'paddingTop',
+          pR: 'paddingRight',
+          pB: 'paddingBottom',
+          pL: 'paddingLeft',
+          pV: 'paddingVertical',
+          pH: 'paddingHorizontal',
+          m: 'margin',
+          mT: 'marginTop',
+          mR: 'marginRight',
+          mB: 'marginBottom',
+          mL: 'marginLeft',
+          mV: 'marginVertical',
+          mH: 'marginHorizontal',
+        }
+        const obj = {}
+        Object.entries(data).map(([key, val]) => {
+          const r = {
+            xs: { [val]: unit * 2 },
+            s: { [val]: unit * 4 },
+            m: { [val]: unit * 8 },
+            l: { [val]: unit * 16 },
+            xl: { [val]: unit * 24 },
+          }
+          obj[key] = r
+        })
+        return obj
+      }]
     }
   },
+  themes: {
+    dark: {
+      __fun: [({ themes }) => ({
+        ...themes.default,
+        colors: {
+          ...themes.default.colors,
+          primary: themes.default.colors.red,
+        }
+      })]
+    }
+  }
 }

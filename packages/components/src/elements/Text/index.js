@@ -18,8 +18,8 @@ const Text = ({
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
-    const theme = mergeWithComponentStyles('Text', style)
-    const s = [theme.default]
+    const compTheme = mergeWithComponentStyles('Text', style)
+    const s = [compTheme.default]
 
     if (inline) {
       s[0].text.width = 'auto'
@@ -28,23 +28,34 @@ const Text = ({
       s[0].text.textAlign = 'center'
     }
     if (h1) {
-      s.push(theme.h1)
+      s.push(compTheme.h1)
     }
     if (h2) {
-      s.push(theme.h2)
+      s.push(compTheme.h2)
     }
     if (h3) {
-      s.push(theme.h3)
+      s.push(compTheme.h3)
     }
     if (small) {
-      s.push(theme.small)
+      s.push(compTheme.small)
     }
     if (muted) {
-      s.push(theme.muted)
+      s.push(compTheme.muted)
     }
 
     return mergeStyles(s)
-  }, [style, inline, center, h1, h2, h3, muted, small])
+  }, [
+    mergeWithComponentStyles,
+    mergeStyles,
+    style,
+    inline,
+    center,
+    h1,
+    h2,
+    h3,
+    muted,
+    small,
+  ])
 
   return <RNText style={finalStyle.text}>{children}</RNText>
 }

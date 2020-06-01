@@ -19,33 +19,44 @@ const Button = ({
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
-    const theme = mergeWithComponentStyles('Button', style)
-    const s = [theme.default]
+    const compTheme = mergeWithComponentStyles('Button', style)
+    const s = [compTheme.default]
 
     if (inline) {
       s[0].button.width = undefined
     }
     if (success) {
-      s.push(theme.success)
+      s.push(compTheme.success)
     }
     if (error) {
-      s.push(theme.error)
+      s.push(compTheme.error)
     }
     if (warning) {
-      s.push(theme.warning)
+      s.push(compTheme.warning)
     }
     if (info) {
-      s.push(theme.info)
+      s.push(compTheme.info)
     }
     if (transparent) {
-      s.push(theme.transparent)
+      s.push(compTheme.transparent)
     }
     if (disabled) {
-      s.push(theme.disabled)
+      s.push(compTheme.disabled)
     }
 
     return mergeStyles(s)
-  }, [style, inline, success, error, warning, info, transparent, disabled])
+  }, [
+    mergeWithComponentStyles,
+    mergeStyles,
+    style,
+    inline,
+    success,
+    error,
+    warning,
+    info,
+    transparent,
+    disabled,
+  ])
 
   return (
     <TouchableOpacity

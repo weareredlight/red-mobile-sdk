@@ -325,7 +325,7 @@ const solveThemeFunctions = (theme, data) => {
             `solveThemeFunctions: ${key}[${index}] is not a 'function'. Please check your theme.`,
           )
         }
-        return fun(theme)
+        return solveThemeFunctions(theme, fun(theme))
       })
       // functionsResults = [{...}, null, {...}, null, {...}]
       const filteredResults =

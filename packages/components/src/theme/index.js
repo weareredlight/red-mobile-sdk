@@ -24,8 +24,6 @@ import { TextStyle } from '../elements/Text/style'
 
 import { defaultTheme } from './defaultTheme'
 
-let renderCount = 1
-
 const ThemeContext = createContext()
 
 const defaultThemeName = 'default'
@@ -82,10 +80,10 @@ export const ThemeProvider = props => {
   const themeContext = useMemo(
     () => {
       const parsedTheme = themeParser(theme, selectedTheme)
-      console.log('DEBUG: parsedTheme', parsedTheme)
 
       return {
         theme: parsedTheme,
+        selectedTheme,
 
         // return a component styles object
         getStyles: compName => parsedTheme.components[compName],
