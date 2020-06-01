@@ -1,5 +1,5 @@
 {
-  "name": "components",
+  "name": "@redlightsoftware/components",
   "version": "0.1.3",
   "main": "lib/index.js",
   "dependencies": {
@@ -11,5 +11,31 @@
     "react": ">=16.13.1 < 17",
     "react-native": ">= 0.62 < 0.70"
   },
-  "gitHead": "aefcd435f4b4fd03593a017e62d305225fed7b1c"
+  "description": "> TODO: description",
+  "keywords": [
+    "react",
+    "react-native",
+    "web",
+    "components",
+    "elements"
+  ],
+  "author": "Samuel Nunes <samuelmn@redlightsoft.com>",
+  "homepage": "https://github.com/weareredlight/red-mobile-sdk",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weareredlight/red-mobile-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weareredlight/red-mobile-sdk/issues"
+  }
 }
