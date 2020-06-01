@@ -1,5 +1,9 @@
 {
   "name": "@redlightsoftware/components",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.yarnpkg.com"
+  },
   "version": "0.1.4",
   "main": "lib/index.js",
   "dependencies": {
@@ -28,14 +32,12 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/weareredlight/red-mobile-sdk.git"
   },
   "bugs": {
     "url": "https://github.com/weareredlight/red-mobile-sdk/issues"
-  }
+  },
+  "gitHead": "9524aab34553b9e784f6f2092e386f2a549736b8"
 }

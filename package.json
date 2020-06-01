@@ -1,12 +1,9 @@
 {
   "name": "red-mobile-sdk",
-  "private": false,
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "dev": "yarn build --watch",
     "build": "lerna exec --parallel -- babel --root-mode upward src -d lib --ignore **/*.story.js,**/*.spec.js",
