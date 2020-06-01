@@ -1,6 +1,6 @@
 {
   "name": "red-mobile-sdk",
-  "private": true,
+  "private": false,
   "workspaces": [
     "packages/*"
   ],
