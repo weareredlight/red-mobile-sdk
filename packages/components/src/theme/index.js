@@ -19,6 +19,7 @@ import {
 } from './utils'
 
 // ComponentThemes
+import { ScreenStyle } from '../elements/Screen/style'
 import { ButtonStyle } from '../elements/Button/style'
 import { TextStyle } from '../elements/Text/style'
 
@@ -39,6 +40,7 @@ const themeDefaultTemplate = {
   // default components
   defaultThemeComponents: defaultTheme.components,
   originalComponents: {
+    Screen: ScreenStyle,
     Button: ButtonStyle,
     Text: TextStyle,
   },

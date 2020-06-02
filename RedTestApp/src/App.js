@@ -1,8 +1,10 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, View, Text } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
+
+import { Screen } from '@redlightsoftware/components'
 
 // Theme provider
-import ThemeProvider from 'components/lib/theme'
+import ThemeProvider from '@redlightsoftware/components/lib/theme'
 
 // Stories
 import { default as TextStory } from './stories/Text'
@@ -18,24 +20,24 @@ const App = () => (
         ({ variableFromMixin: vars.variableFromAppJS })
     }}
   >
-    <SafeAreaView>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>🔴 RedTestApp 🔴</Text>
-          <Text style={styles.sectionDescription}>
-            This app mirrors all the components made available by
-            red-mobile-sdk/components
-          </Text>
-          <Text style={styles.sectionDescription}>
-            Please keep this app updated 🙏
-          </Text>
-        </View>
+    <Screen scroll>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>🔴 RedTestApp 🔴</Text>
+        <Text style={styles.sectionDescription}>
+          This app mirrors all the components made available by
+          red-mobile-sdk/components
+        </Text>
+        <Text style={styles.sectionDescription}>
+          Please keep this app updated 🙏
+        </Text>
+      </View>
 
-        {/* List all stories */}
-        <TextStory />
-        <ButtonStory />
-      </ScrollView>
-    </SafeAreaView>
+      {/* List all stories */}
+      <TextStory />
+      <ButtonStory />
+
+      <TextInput />
+    </Screen>
   </ThemeProvider>
 )
 

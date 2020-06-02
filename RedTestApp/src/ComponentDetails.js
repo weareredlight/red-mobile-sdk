@@ -4,7 +4,7 @@ import merge from 'lodash/merge'
 import { View, Text, Button } from 'react-native'
 import styles from './ComponentDetailsStyles'
 
-import { useTheme } from 'components'
+import { useTheme } from '@redlightsoftware/components'
 
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes)

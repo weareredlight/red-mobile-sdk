@@ -7,16 +7,16 @@ export const defaultTheme = {
       fontFamily: 'Inter-LightBETA',
       fontFamilyBold: 'Inter-Bold',
       fontFamilySmall: 'Inter-Medium',
-      __fun: [({ vars }) => ({ color: vars.colors.textColor })],
+      __fun: [({ themes }) => ({ color: themes.default.colors.textColor })],
     },
     spacing: {
       basicSpacingUnit: 2,
-      __fun: [({ vars }) => ({
-        xs: vars.spacing.basicSpacingUnit * 1,
-        s: vars.spacing.basicSpacingUnit * 2,
-        m: vars.spacing.basicSpacingUnit * 4,
-        l: vars.spacing.basicSpacingUnit * 8,
-        xl: vars.spacing.basicSpacingUnit * 20,
+      __fun: [({ themes }) => ({
+        xs: themes.default.spacing.basicSpacingUnit * 1,
+        s: themes.default.spacing.basicSpacingUnit * 2,
+        m: themes.default.spacing.basicSpacingUnit * 4,
+        l: themes.default.spacing.basicSpacingUnit * 8,
+        xl: themes.default.spacing.basicSpacingUnit * 20,
       })]
     },
     colors: {
@@ -33,8 +33,8 @@ export const defaultTheme = {
       yellow: '#FFDF80',
     },
     helpers: {
-      __fun: [({ vars }) => {
-        const unit = vars.spacing.basicSpacingUnit
+      __fun: [({ themes }) => {
+        const unit = themes.default.spacing.basicSpacingUnit
         const data = {
           p: 'padding',
           pT: 'paddingTop',
