@@ -202,7 +202,7 @@ export const defaultThemeBuilder = (
     vars: mergedThemes[selectedTheme],
     themes: mergedThemes,
     components: mergedComponents,
-    mixins,
+    mixins: merge({}, themeDefaultTemplate.defaultMixins, mixins),
   }
 }
 

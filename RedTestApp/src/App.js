@@ -17,19 +17,7 @@ import LoadingOverlayStory from './stories/LoadingOverlay'
 
 const App = () => {
   return (
-    <ThemeProvider
-      mixins={{
-        setBGcolorByOS: ({ vars }) => ({
-          __web: { backgroundColor: vars.colors.blue },
-          __ios: { backgroundColor: vars.colors.red },
-          __android: { backgroundColor: vars.colors.green },
-        }),
-        backgroundColorWithOpacity: ({ vars }, color, opacity) => ({
-          backgroundColor:
-            vars.colors[color] + parseInt(255 * opacity).toString(16).toUpperCase()
-        }),
-      }}
-    >
+    <ThemeProvider>
       <Screen scroll>
         <Flex style={headerStyles}>
           <Text h1>🔴 RedTestApp 🔴</Text>

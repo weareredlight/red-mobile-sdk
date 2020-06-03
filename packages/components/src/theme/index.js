@@ -50,6 +50,8 @@ const themeDefaultTemplate = {
     Text: TextStyle,
     Flex: FlexStyle,
   },
+  // default mixins
+  defaultMixins: defaultTheme.mixins,
 }
 
 export const ThemeProvider = props => {
