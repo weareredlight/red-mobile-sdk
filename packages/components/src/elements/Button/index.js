@@ -16,7 +16,7 @@ const Button = ({
   onPress,
   title,
 }) => {
-  const { mergeStyles, mergeWithComponentStyles } = useTheme()
+  const { theme, mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
     const compTheme = mergeWithComponentStyles('Button', style)
@@ -24,6 +24,7 @@ const Button = ({
 
     if (inline) {
       s[0].button.width = undefined
+      s[0].button.marginHorizontal = theme.vars.spacing.s
     }
     if (success) {
       s.push(compTheme.success)

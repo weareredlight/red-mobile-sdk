@@ -1,102 +1,110 @@
 const styles = {
   container: {
-    borderBottomColor: '#F3F3F3',
-    borderBottomWidth: 1,
-    padding: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000000',
-    padding: 10,
-    paddingBottom: 4,
+    default: {
+      flex: {
+        borderBottomWidth: 1,
+        __fun: [({ vars }) => ({
+          borderBottomColor: vars.colors.grey,
+          padding: vars.spacing.m,
+        })]
+      }
+    }
   },
   buttonsWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    width: '100%',
-    paddingVertical: 4,
+    default: {
+      flex: {
+        __fun: [({ vars }) => ({
+          paddingVertical: vars.spacing.xs,
+        })]
+      }
+    }
   },
   section: {
-    flexDirection: 'column',
-    backgroundColor: '#F3F3F3',
-    borderRadius: 4,
-    margin: 4,
-    paddingVertical: 8,
+    default: {
+      flex: {
+        maxWidth: 700,
+        __fun: [({ vars }) => ({
+          backgroundColor: vars.colors.lightGrey,
+          borderRadius: vars.borderRadius,
+          paddingVertical: vars.spacing.m,
+          marginVertical: vars.spacing.s,
+        })]
+      }
+    }
   },
   sectionSpacer: {
-    width: '100%',
-    height: 1,
-    marginVertical: 10,
-    borderBottomColor: '#DFDFDF',
-    borderBottomWidth: 1,
+    default: {
+      flex: {
+        height: 1,
+        borderBottomWidth: 1,
+        __fun: [({ vars }) => ({
+          marginVertical: vars.spacing.m,
+          borderBottomColor: vars.colors.grey,
+        })]
+      }
+    }
   },
   propContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 2,
+    default: {
+      flex: {
+        __fun: [({ vars }) => ({
+          paddingHorizontal: vars.spacing.m,
+          paddingVertical: vars.spacing.s,
+        })]
+      }
+    }
   },
-  propName: {
-    flex: 1,
-    padding: 6,
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#333333',
-  },
-  propRequired: {
-    flex: 1,
-    padding: 6,
-    fontSize: 16,
-    fontWeight: '300',
-    fontStyle: 'italic',
-    color: 'grey',
-    textAlign: 'center',
-  },
-  propType: {
-    flex: 1,
-    padding: 6,
-    fontSize: 16,
-    fontWeight: '300',
-    color: '#333333',
-    textAlign: 'right',
+  styleWrapper: {
+    default: {
+      flex: {
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        __fun: [({ vars }) => ({
+          borderTopColor: vars.colors.grey,
+          borderLeftColor: vars.colors.grey,
+          paddingLeft: vars.spacing.m,
+          paddingTop: vars.spacing.xs,
+        })]
+      }
+    }
   },
   styleContainer: {
-    flexDirection: 'column',
-    borderLeftColor: '#DFDFDF',
-    borderLeftWidth: 1,
-    marginLeft: 14,
-    paddingBottom: 6,
+    default: {
+      flex: {
+        __fun: [({ vars }) => ({
+          paddingRight: vars.spacing.s,
+          paddingVertical: vars.spacing.xs,
+        })]
+      }
+    }
   },
-  styleHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  styleKey: {
-    paddingVertical: 4,
-    paddingLeft: 10,
+  componentWrapper: {
+    default: {
+      flex: {
+        __fun: [({ vars }) => ({
+          padding: vars.spacing.m,
+        })]
+      }
+    }
   },
   componentContainer: {
-    alignItems: 'flex-start',
-    borderColor: '#DFDFDF',
-    borderWidth: 1,
-    marginHorizontal: 10,
-    marginVertical: 4,
-  },
-  componentIterations: {
-    fontSize: 12,
-    fontWeight: '400',
-    marginHorizontal: 12,
-    marginVertical: 2,
-    color: 'grey',
+    default: {
+      flex: {
+        borderWidth: 1,
+        __fun: [({ vars }) => ({
+          borderColor: vars.colors.black,
+        })]
+      }
+    }
   },
   componentMissingProps: {
-    fontSize: 12,
-    fontWeight: '300',
-    marginHorizontal: 12,
-    marginVertical: 2,
-    color: 'red',
+    default: {
+      text: {
+        __fun: [({ vars }) => ({
+          color: vars.colors.red,
+        })]
+      }
+    }
   },
 }
 

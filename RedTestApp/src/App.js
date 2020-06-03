@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { TextInput } from 'react-native'
 
-import { Screen } from '@redlightsoftware/components'
+import { Screen, Text, Flex } from '@redlightsoftware/components'
 
 // Theme provider
 import ThemeProvider from '@redlightsoftware/components/lib/theme'
@@ -21,16 +21,16 @@ const App = () => (
     }}
   >
     <Screen scroll>
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>🔴 RedTestApp 🔴</Text>
-        <Text style={styles.sectionDescription}>
+      <Flex style={headerStyles}>
+        <Text h1>🔴 RedTestApp 🔴</Text>
+        <Text>
           This app mirrors all the components made available by
           red-mobile-sdk/components
         </Text>
-        <Text style={styles.sectionDescription}>
+        <Text>
           Please keep this app updated 🙏
         </Text>
-      </View>
+      </Flex>
 
       {/* List all stories */}
       <TextStory />
@@ -41,29 +41,18 @@ const App = () => (
   </ThemeProvider>
 )
 
-const styles = {
-  scrollView: {
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-    borderBottomColor: '#F3F3F3',
-    borderBottomWidth: 1,
-    paddingBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 28,
-    fontWeight: '600',
-    color: '#000000',
-  },
-  sectionDescription: {
-    marginTop: 18,
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#000000',
-  },
+const headerStyles = {
+  default: {
+    flex: {
+      borderBottomWidth: 1,
+      __fun: [({ vars }) => ({
+        borderBottomColor: vars.colors.muted,
+        marginTop: vars.spacing.m,
+        paddingHorizontal: vars.spacing.m,
+        paddingBottom: vars.spacing.m,
+      })]
+    }
+  }
 }
 
 export default App

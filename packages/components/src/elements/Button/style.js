@@ -10,8 +10,8 @@ export const ButtonStyle = {
       __fun: [({ vars }) => ({
         borderRadius: vars.borderRadius,
         paddingVertical: vars.spacing.m,
-        paddingHorizontal: vars.spacing.xl,
-        marginVertical: vars.spacing.m,
+        paddingHorizontal: vars.spacing.l,
+        marginVertical: vars.spacing.s,
         backgroundColor: vars.colors.primary,
       })],
     },

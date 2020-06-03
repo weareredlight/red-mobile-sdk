@@ -1,10 +1,14 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import merge from 'lodash/merge'
-import { View, Text, Button } from 'react-native'
 import styles from './ComponentDetailsStyles'
 
-import { useTheme } from '@redlightsoftware/components'
+import {
+  useTheme,
+  Flex,
+  Button,
+  Text,
+} from '@redlightsoftware/components'
 
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes)
@@ -23,7 +27,7 @@ const getComponentPropTypes = ({ propTypes }) =>
     )
 
 const ComponentDetails = ({ component, defaultProps, iterations }) => {
-  const { getStyles } = useTheme()
+  const { theme: t, getStyles } = useTheme()
   const [showProps, setShowProps] = useState(false)
   const [showStyles, setShowStyles] = useState(false)
   const [showIterations, setShowIterations] = useState(false)
@@ -51,53 +55,71 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
   ])
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{component.name}</Text>
+    <Flex style={styles.container}>
+      <Flex
+        row
+        justify={t.breakPoints.gteTablet ? 'space-between' : 'flex-start'}
+      >
+        <Text h3 inline>{component.name}</Text>
+        {t.breakPoints.gteTablet && (
+          <Flex row flex={1} justify='flex-end' style={styles.buttonsWrapper}>
+            <Button inline title='Props' onPress={onProps} />
+            <Button inline title='Styles' onPress={onStyles} />
+            <Button inline title='Iterations' onPress={onIterations} />
+          </Flex>
+        )}
+      </Flex>
 
-      <View style={styles.section}>
+      <Flex row style={styles.section}>
         {renderComponent(component, defaultProps, propTypes, defaultProps)}
-      </View>
+      </Flex>
 
-      <View style={styles.buttonsWrapper}>
-        <Button title='Props' onPress={onProps} />
-        <Button title='Styles' onPress={onStyles} />
-        <Button title='Iterations' onPress={onIterations} />
-      </View>
+      {t.breakPoints.ltePhablet && (
+        <Flex row justify='space-between' style={styles.buttonsWrapper}>
+          <Button inline title='Props' onPress={onProps} />
+          <Button inline title='Styles' onPress={onStyles} />
+          <Button inline title='Iterations' onPress={onIterations} />
+        </Flex>
+      )}
 
       {showProps && (
-        <View style={styles.section}>{renderProps(propTypes)}</View>
+        <Flex style={styles.section}>{renderProps(propTypes)}</Flex>
       )}
 
       {showStyles && (
-        <View style={styles.section}>{renderStyles(getStyles(component.name), 0)}</View>
+        <Flex style={styles.section}>
+          <Flex style={{ default: { flex: t.vars.helpers.pH.s }}}>
+            {renderStyles(getStyles(component.name), 0)}
+          </Flex>
+        </Flex>
       )}
 
       {showIterations && iterations && (
-        <View style={styles.section}>
+        <Flex style={styles.section}>
           {iterations.map((iteration, index) => {
             const finalProps = merge({}, defaultProps, iteration)
             return (
-              <View key={index}>
-                {index !== 0 && <View style={styles.sectionSpacer} />}
+              <Flex key={index}>
+                {index !== 0 && <Flex style={styles.sectionSpacer} />}
                 {renderComponent(component, finalProps, propTypes, iteration)}
-              </View>
+              </Flex>
             )
           })}
-        </View>
+        </Flex>
       )}
-    </View>
+    </Flex>
   )
 }
 
 const renderComponent = (component, renderProps, propTypes, iteration) => {
   const Comp = component
   return (
-    <>
-      <View style={styles.componentContainer}>
+    <Flex style={styles.componentWrapper}>
+      <Flex align='flex-start' style={styles.componentContainer}>
         <Comp {...renderProps} />
-      </View>
+      </Flex>
       {iteration && (
-        <Text style={styles.componentIterations}>
+        <Text small>
           {JSON.stringify(iteration)
             .split('":')
             .join('": ')
@@ -109,26 +131,37 @@ const renderComponent = (component, renderProps, propTypes, iteration) => {
         ({ key, isRequired }) =>
           isRequired &&
           !renderProps[key] && (
-            <Text key={key} style={styles.componentMissingProps}>
+            <Text small key={key} style={styles.componentMissingProps}>
               {`Prop '${key}' is required but value is: ${renderProps[key]}`}
             </Text>
           ),
       )}
-    </>
+    </Flex>
   )
 }
 
-const darker = { backgroundColor: '#DDDDDD' }
+const renderPropsStyles = i => ({
+  ...styles.propContainer,
+  default: {
+    ...styles.propContainer.default,
+    flex: {
+      ...styles.propContainer.default.flex,
+      ...(i % 2 === 1 ? { backgroundColor: '#DDDDDD'} : {})
+    }
+  }
+})
 const renderProps = propTypes =>
   propTypes.map((prop, index) => (
-    <View
+    <Flex
       key={prop.key}
-      style={[styles.propContainer, index % 2 === 1 ? darker : {}]}
+      row
+      justify='space-between'
+      style={renderPropsStyles(index)}
     >
-      <Text style={styles.propName}>{prop.key}</Text>
-      {prop.isRequired && <Text style={styles.propRequired}>required</Text>}
-      <Text style={styles.propType}>{prop.propTypeName}</Text>
-    </View>
+      <Text inline>{prop.key}</Text>
+      {prop.isRequired && <Text inline muted>required</Text>}
+      <Text inline>{prop.propTypeName}</Text>
+    </Flex>
   ))
 
 const renderStyles = (theme, level) => {
@@ -145,28 +178,32 @@ const renderStyles = (theme, level) => {
       labelToPrint = `${Object.entries(value).length}`
       valueToPrint = `${Object.entries(value).map(([k]) => `${k}()`)}`
     } else if (key.startsWith('__') || typeof value === 'object') {
-      valueToPrint = null
+      valueToPrint = ''
       chidlrenToPrint = renderStyles(value, level + 1)
     }
 
     return (
-      <View key={key} style={styles.styleContainer}>
-        <View
+      <Flex key={key} style={styles.styleWrapper}>
+        <Flex
           key={key}
-          style={[styles.styleHeader, index % 2 === 1 && level > 1 ? darker : {}]}
+          row
+          justify='space-between'
+          style={styles.styleContainer}
         >
-          <Text style={styles.propName}>
+          <Text inline>
             {keyToPrint}
             {labelToPrint && labelToPrint.length > 0 &&
-              <Text style={styles.propRequired}>
+              <Text inline muted>
                 {'  ' + labelToPrint}
               </Text>
             }
           </Text>
-          <Text style={styles.propType}>{valueToPrint}</Text>
-        </View>
+          <Text inline>
+            {valueToPrint}
+          </Text>
+        </Flex>
         {chidlrenToPrint && chidlrenToPrint}
-      </View>
+      </Flex>
     )
   })
 }

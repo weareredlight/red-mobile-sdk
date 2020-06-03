@@ -22,6 +22,7 @@ import {
 import { ScreenStyle } from '../elements/Screen/style'
 import { ButtonStyle } from '../elements/Button/style'
 import { TextStyle } from '../elements/Text/style'
+import { FlexStyle } from '../elements/Flex/style'
 
 import { defaultTheme } from './defaultTheme'
 
@@ -43,6 +44,7 @@ const themeDefaultTemplate = {
     Screen: ScreenStyle,
     Button: ButtonStyle,
     Text: TextStyle,
+    Flex: FlexStyle,
   },
 }
 
