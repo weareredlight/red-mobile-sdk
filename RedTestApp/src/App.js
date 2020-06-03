@@ -1,48 +1,58 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 
-import { Screen, Text, Flex } from '@redlightsoftware/components'
-
-// Theme provider
-import ThemeProvider from '@redlightsoftware/components/lib/theme'
+import {
+  ThemeProvider,
+  Screen,
+  Button,
+  Text,
+  Flex,
+} from '@redlightsoftware/components'
 
 // Stories
-import { default as TextStory } from './stories/Text'
-import { default as ButtonStory } from './stories/Button'
-import { default as LoadingStory } from './stories/Loading'
+import TextStory from './stories/Text'
+import ButtonStory from './stories/Button'
+import LoadingStory from './stories/Loading'
+import LoadingOverlayStory from './stories/LoadingOverlay'
 
-const App = () => (
-  <ThemeProvider
-    mixins={{
-      setBGcolorByOS: ({ vars }) =>
-        ({
+const App = () => {
+  return (
+    <ThemeProvider
+      mixins={{
+        setBGcolorByOS: ({ vars }) => ({
           __web: { backgroundColor: vars.colors.blue },
           __ios: { backgroundColor: vars.colors.red },
           __android: { backgroundColor: vars.colors.green },
         }),
-    }}
-  >
-    <Screen scroll>
-      <Flex style={headerStyles}>
-        <Text h1>🔴 RedTestApp 🔴</Text>
-        <Text>
-          This app mirrors all the components made available by
-          red-mobile-sdk/components
-        </Text>
-        <Text>
-          Please keep this app updated 🙏
-        </Text>
-      </Flex>
+        backgroundColorWithOpacity: ({ vars }, color, opacity) => ({
+          backgroundColor:
+            vars.colors[color] + parseInt(255 * opacity).toString(16).toUpperCase()
+        }),
+      }}
+    >
+      <Screen scroll>
+        <Flex style={headerStyles}>
+          <Text h1>🔴 RedTestApp 🔴</Text>
+          <Text>
+            This app mirrors all the components made available by
+            red-mobile-sdk/components
+          </Text>
+          <Text>
+            Please keep this app updated 🙏
+          </Text>
+        </Flex>
 
-      {/* List all stories */}
-      <TextStory />
-      <ButtonStory />
-      <LoadingStory />
+        {/* List all stories */}
+        <TextStory />
+        <ButtonStory />
+        <LoadingStory />
+        <LoadingOverlayStory />
 
-      <TextInput />
-    </Screen>
-  </ThemeProvider>
-)
+        <TextInput />
+      </Screen>
+    </ThemeProvider>
+  )
+}
 
 const headerStyles = {
   default: {

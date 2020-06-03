@@ -19,6 +19,7 @@ import {
 } from './utils'
 
 // ComponentThemes
+import { LoadingOverlayStyle } from '../elements/LoadingOverlay/style'
 import { LoadingStyle } from '../elements/Loading/style'
 import { ScreenStyle } from '../elements/Screen/style'
 import { ButtonStyle } from '../elements/Button/style'
@@ -42,6 +43,7 @@ const themeDefaultTemplate = {
   // default components
   defaultThemeComponents: defaultTheme.components,
   originalComponents: {
+    LoadingOverlay: LoadingOverlayStyle,
     Loading: LoadingStyle,
     Screen: ScreenStyle,
     Button: ButtonStyle,

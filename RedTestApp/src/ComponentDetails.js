@@ -197,7 +197,7 @@ const renderStyles = (theme, level) => {
               </Text>}
           </Text>
           <Text inline>
-            {valueToPrint}
+            {valueToPrint || ''}
           </Text>
         </Flex>
         {chidlrenToPrint && chidlrenToPrint}
