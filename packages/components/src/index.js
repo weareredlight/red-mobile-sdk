@@ -4,6 +4,7 @@ import Flex from './elements/Flex'
 import Text from './elements/Text'
 import Button from './elements/Button'
 import Screen from './elements/Screen'
+import Loading from './elements/Loading'
 
 export {
   useTheme,
@@ -12,4 +13,5 @@ export {
   Text,
   Button,
   Screen,
+  Loading,
 }

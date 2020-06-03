@@ -11,17 +11,9 @@ const TextStory = () => (
       style: {
         default: {
           text: {
-            __fun: [({ vars }) => ({
-              __ios: {
-                backgroundColor: vars.colors.yellow,
-              },
-              __web: {
-                backgroundColor: vars.colors.blue,
-              },
-              __android: {
-                backgroundColor: vars.colors.green,
-              }
-            })]
+            __mixins: {
+              setBGcolorByOS: []
+            }
           }
         }
       },

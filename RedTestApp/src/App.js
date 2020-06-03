@@ -9,15 +9,17 @@ import ThemeProvider from '@redlightsoftware/components/lib/theme'
 // Stories
 import { default as TextStory } from './stories/Text'
 import { default as ButtonStory } from './stories/Button'
+import { default as LoadingStory } from './stories/Loading'
 
 const App = () => (
   <ThemeProvider
-    variables={{
-      variableFromAppJS: true,
-    }}
     mixins={{
-      getX: ({ vars }) =>
-        ({ variableFromMixin: vars.variableFromAppJS })
+      setBGcolorByOS: ({ vars }) =>
+        ({
+          __web: { backgroundColor: vars.colors.blue },
+          __ios: { backgroundColor: vars.colors.red },
+          __android: { backgroundColor: vars.colors.green },
+        }),
     }}
   >
     <Screen scroll>
@@ -35,6 +37,7 @@ const App = () => (
       {/* List all stories */}
       <TextStory />
       <ButtonStory />
+      <LoadingStory />
 
       <TextInput />
     </Screen>

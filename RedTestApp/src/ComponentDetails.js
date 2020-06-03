@@ -88,7 +88,7 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
 
       {showStyles && (
         <Flex style={styles.section}>
-          <Flex style={{ default: { flex: t.vars.helpers.pH.s }}}>
+          <Flex style={{ default: { flex: t.vars.helpers.pH.s } }}>
             {renderStyles(getStyles(component.name), 0)}
           </Flex>
         </Flex>
@@ -146,7 +146,7 @@ const renderPropsStyles = i => ({
     ...styles.propContainer.default,
     flex: {
       ...styles.propContainer.default.flex,
-      ...(i % 2 === 1 ? { backgroundColor: '#DDDDDD'} : {})
+      ...(i % 2 === 1 ? { backgroundColor: '#DDDDDD' } : {})
     }
   }
 })
@@ -166,14 +166,13 @@ const renderProps = propTypes =>
 
 const renderStyles = (theme, level) => {
   return Object.entries(theme).map(([key, value], index) => {
-    let keyToPrint = key
     let valueToPrint = value
     let labelToPrint = level === 0 ? 'state' : level === 1 ? 'element' : ''
     let chidlrenToPrint = null
 
     if (key.startsWith('__fun')) {
       labelToPrint = `${value.length}`
-      valueToPrint = `[ ${value.map(fun => `f() `)}]`
+      valueToPrint = `[ ${value.map(fun => 'f() ')}]`
     } else if (key.startsWith('__mixins')) {
       labelToPrint = `${Object.entries(value).length}`
       valueToPrint = `${Object.entries(value).map(([k]) => `${k}()`)}`
@@ -191,12 +190,11 @@ const renderStyles = (theme, level) => {
           style={styles.styleContainer}
         >
           <Text inline>
-            {keyToPrint}
+            {key}
             {labelToPrint && labelToPrint.length > 0 &&
               <Text inline muted>
                 {'  ' + labelToPrint}
-              </Text>
-            }
+              </Text>}
           </Text>
           <Text inline>
             {valueToPrint}
@@ -210,7 +208,6 @@ const renderStyles = (theme, level) => {
 
 ComponentDetails.propTypes = {
   component: PropTypes.func.isRequired,
-  style: PropTypes.shape(),
   defaultProps: PropTypes.shape(),
   iterations: PropTypes.arrayOf(PropTypes.shape()),
 }

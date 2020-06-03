@@ -111,7 +111,7 @@ We got a ${typeof value} instead. Please check your theme.`,
                 `parseThemeDeep: Mixin '${mixinName}' invalid. Please check your <ThemeProvider mixins>`,
               )
             }
-            return mixinFunc(theme, ...mixinParams)
+            return merge({}, ...parse(mixinFunc(theme, ...mixinParams)))
           })
           return merge({}, ...mixinResults)
         }
@@ -337,13 +337,21 @@ const solveThemeFunctions = (theme, data) => {
         const targetKeyToApplyResults =
           key.split('.').splice(0, key.split('.').length - 1).join('.')
         // targetKeyToApplyResults = 'Button.default.text'
-        const targetKeyValue = get(data, targetKeyToApplyResults, {})
-        // targetKeyValue = { old stuff }
-        const mergedFunctionResult = merge({}, targetKeyValue, mergedResults)
-        mergedFunctionResult.__fun = null
-        set(dataCopy, targetKeyToApplyResults, mergedFunctionResult)
-        // 'Button.default.text' = { old stuff, results }
-        // 'Button.default.text.__fun' = null
+        if (targetKeyToApplyResults) {
+          const targetKeyValue = get(data, targetKeyToApplyResults, {})
+          // targetKeyValue = { old stuff }
+          const mergedFunctionResult = merge({}, targetKeyValue, mergedResults)
+          mergedFunctionResult.__fun = null
+          set(dataCopy, targetKeyToApplyResults, mergedFunctionResult)
+          // 'Button.default.text' = { old stuff, results }
+          // 'Button.default.text.__fun' = null
+        } else {
+          // no key. we are solving for root object
+          merge(dataCopy, mergedResults)
+          dataCopy.__fun = null
+          // dataCopy = { old stuff, results }
+          // dataCopy.__fun = null
+        }
       }
     }
   })
