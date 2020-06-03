@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { TouchableOpacity, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import { useTheme } from '../../theme'
 
@@ -16,15 +16,14 @@ const Button = ({
   onPress,
   title,
 }) => {
-  const { theme, mergeStyles, mergeWithComponentStyles } = useTheme()
+  const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
     const compTheme = mergeWithComponentStyles('Button', style)
     const s = [compTheme.default]
 
     if (inline) {
-      s[0].button.width = undefined
-      s[0].button.marginHorizontal = theme.vars.spacing.s
+      s[0].wrapper.width = undefined
     }
     if (success) {
       s.push(compTheme.success)
@@ -60,13 +59,15 @@ const Button = ({
   ])
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      disabled={disabled}
-      style={finalStyle.button}
-    >
-      <Text style={finalStyle.text}>{title}</Text>
-    </TouchableOpacity>
+    <View style={finalStyle.wrapper}>
+      <TouchableOpacity
+        onPress={onPress}
+        disabled={disabled}
+        style={finalStyle.button}
+      >
+        <Text style={finalStyle.text}>{title}</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
