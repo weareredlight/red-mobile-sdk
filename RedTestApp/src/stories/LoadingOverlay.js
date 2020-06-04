@@ -1,11 +1,10 @@
 import React, { useState, useCallback } from 'react'
-import ComponentDetails from '../ComponentDetails'
 import styles from '../ComponentDetailsStyles'
 import { useTheme, Flex, Text, Button, LoadingOverlay } from '@redlightsoftware/components'
 
 const LoadingOverlayStory = () => {
   const { theme: { breakPoints: bp } } = useTheme()
-  
+
   const [showOverlay, setShowOverlay] = useState(false)
   const toggleOverlay = useCallback(() => {
     setShowOverlay(true)
@@ -17,7 +16,6 @@ const LoadingOverlayStory = () => {
   return (
     <Flex style={styles.container}>
       <LoadingOverlay visible={showOverlay} />
-      
       <Flex
         row={bp.gteTablet}
         justify='space-between'
@@ -40,7 +38,6 @@ const LoadingOverlayStory = () => {
           />
         </Flex>
       </Flex>
-      
     </Flex>
   )
 }

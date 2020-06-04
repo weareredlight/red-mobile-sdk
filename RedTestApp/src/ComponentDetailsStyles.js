@@ -22,7 +22,7 @@ const styles = {
   section: {
     default: {
       flex: {
-        maxWidth: 700,
+        maxWidth: 900,
         __fun: [({ vars }) => ({
           backgroundColor: vars.colors.lightGrey,
           borderRadius: vars.borderRadius,

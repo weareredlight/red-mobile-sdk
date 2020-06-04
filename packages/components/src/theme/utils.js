@@ -182,13 +182,11 @@ export const defaultThemeBuilder = (
   // STEP 2 - merge components
 
   // We need to merge all the components IN THIS ORDER:
-  // 1 - original components = ex: elements/Button/style.js
-  // 2 - default theme overrides = theme/defaultTheme.js
-  // 3 - components = from <ThemeProvider components />
+  // 1 - original components = theme/defaultTheme.js
+  // 2 - components = from <ThemeProvider components />
   const mergedComponents = mergeObjectsAndFunctions(
     themeDefaultTemplate.originalComponents, // 1
-    themeDefaultTemplate.defaultThemeComponents, // 2
-    components, // 3
+    components, // 2
   )
 
   return {

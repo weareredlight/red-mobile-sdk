@@ -20,46 +20,19 @@ import {
   defaultThemeBuilder,
 } from './utils'
 
-// ComponentThemes
-import { LoadingOverlayStyle } from '../elements/LoadingOverlay/style'
-import { LoadingStyle } from '../elements/Loading/style'
-import { ScreenStyle } from '../elements/Screen/style'
-import { ButtonStyle } from '../elements/Button/style'
-import { TextStyle } from '../elements/Text/style'
-import { FlexStyle } from '../elements/Flex/style'
-
-import { defaultTheme } from './defaultTheme'
+import {
+  defaultThemeTemplate,
+  defaultThemeName,
+  defaultBreakPoints,
+} from './defaultTheme'
 
 const ThemeContext = createContext()
 
-const defaultThemeName = 'default'
 const defaultDebounceInterval = 250
-
-const themeDefaultTemplate = {
-  // default theme
-  themes: {
-    [defaultThemeName]: {
-      ...defaultTheme.variables,
-    },
-    ...defaultTheme.themes,
-  },
-  // default components
-  defaultThemeComponents: defaultTheme.components,
-  originalComponents: {
-    LoadingOverlay: LoadingOverlayStyle,
-    Loading: LoadingStyle,
-    Screen: ScreenStyle,
-    Button: ButtonStyle,
-    Text: TextStyle,
-    Flex: FlexStyle,
-  },
-  // default mixins
-  defaultMixins: defaultTheme.mixins,
-}
 
 export const ThemeProvider = props => {
   const {
-    breakPoints = defaultTheme.breakPoints,
+    breakPoints = defaultBreakPoints,
     variables = null,
     themes = {},
     components = {},
@@ -70,7 +43,7 @@ export const ThemeProvider = props => {
   const [selectedTheme, setSelectedTheme] = useState(defaultThemeName)
   const [theme, setTheme] = useState(
     defaultThemeBuilder(
-      themeDefaultTemplate,
+      defaultThemeTemplate,
       defaultThemeName,
       selectedTheme,
       breakPoints,

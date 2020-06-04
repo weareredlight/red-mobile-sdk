@@ -4,13 +4,13 @@ import { TextInput } from 'react-native'
 import {
   ThemeProvider,
   Screen,
-  Button,
   Text,
   Flex,
 } from '@redlightsoftware/components'
 
 // Stories
 import TextStory from './stories/Text'
+import ImageStory from './stories/Image'
 import ButtonStory from './stories/Button'
 import LoadingStory from './stories/Loading'
 import LoadingOverlayStory from './stories/LoadingOverlay'
@@ -31,6 +31,7 @@ const App = () => {
         </Flex>
 
         {/* List all stories */}
+        <ImageStory />
         <TextStory />
         <ButtonStory />
         <LoadingStory />

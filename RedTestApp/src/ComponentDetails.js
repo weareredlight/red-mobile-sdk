@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
+import set from 'lodash/set'
 import merge from 'lodash/merge'
+import { default as objFlatten } from 'obj-flatten'
 import styles from './ComponentDetailsStyles'
 
 import {
@@ -56,9 +58,9 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
 
   const actionButtons = (
     <>
-      <Button inline transparent title='Props' onPress={onProps} />
-      <Button inline transparent title='Styles' onPress={onStyles} />
-      <Button inline transparent title='Iterations' onPress={onIterations} />
+      <Button inline transparent={!showProps} title='Props' onPress={onProps} />
+      <Button inline transparent={!showStyles} title='Styles' onPress={onStyles} />
+      <Button inline transparent={!showIterations} title='Iterations' onPress={onIterations} />
     </>
   )
 
@@ -117,14 +119,20 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
 
 const renderComponent = (component, renderProps, propTypes, iteration) => {
   const Comp = component
+  const iterationsParsed = merge({}, iteration)
+  Object.entries(objFlatten(iterationsParsed)).forEach(([k, v]) => {
+    if (v && typeof v === 'string' && v.length > 28) {
+      set(iterationsParsed, k, v.slice(0, 28) + '...')
+    }
+  })
   return (
     <Flex style={styles.componentWrapper}>
       <Flex align='flex-start' style={styles.componentContainer}>
         <Comp {...renderProps} />
       </Flex>
-      {iteration && (
+      {iterationsParsed && (
         <Text small>
-          {JSON.stringify(iteration)
+          {JSON.stringify(iterationsParsed)
             .split('":')
             .join('": ')
             .split(',"')
