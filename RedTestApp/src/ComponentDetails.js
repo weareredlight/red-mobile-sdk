@@ -54,6 +54,14 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
     component,
   ])
 
+  const actionButtons = (
+    <>
+      <Button inline transparent title='Props' onPress={onProps} />
+      <Button inline transparent title='Styles' onPress={onStyles} />
+      <Button inline transparent title='Iterations' onPress={onIterations} />
+    </>
+  )
+
   return (
     <Flex style={styles.container}>
       <Flex
@@ -63,9 +71,7 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
         <Text h3 inline>{component.name}</Text>
         {t.breakPoints.gteTablet && (
           <Flex row flex={1} justify='flex-end' style={styles.buttonsWrapper}>
-            <Button inline title='Props' onPress={onProps} />
-            <Button inline title='Styles' onPress={onStyles} />
-            <Button inline title='Iterations' onPress={onIterations} />
+            {actionButtons}
           </Flex>
         )}
       </Flex>
@@ -76,9 +82,7 @@ const ComponentDetails = ({ component, defaultProps, iterations }) => {
 
       {t.breakPoints.ltePhablet && (
         <Flex row justify='space-between' style={styles.buttonsWrapper}>
-          <Button inline title='Props' onPress={onProps} />
-          <Button inline title='Styles' onPress={onStyles} />
-          <Button inline title='Iterations' onPress={onIterations} />
+          {actionButtons}
         </Flex>
       )}
 

@@ -17,6 +17,7 @@ const ButtonStory = () => (
       { title: 'info', info: true },
       { title: 'transparent', transparent: true },
       { title: 'disabled', disabled: true },
+      { title: 'disabled and transparent', disabled: true, transparent: true },
       { title: 'inline', inline: true },
       {
         title: 'with style',
@@ -29,17 +30,9 @@ const ButtonStory = () => (
             },
             button: {
               borderRadius: 40,
-              __fun: [({ vars }) => ({
-                __ios: {
-                  backgroundColor: vars.colors.yellow,
-                },
-                __web: {
-                  backgroundColor: vars.colors.blue,
-                },
-                __android: {
-                  backgroundColor: vars.colors.green,
-                }
-              })],
+              __mixins: {
+                setBGcolorByOS: [],
+              }
             },
           },
         },

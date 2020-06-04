@@ -21,15 +21,20 @@ const LoadingOverlayStory = () => {
       <Flex
         row={bp.gteTablet}
         justify='space-between'
-        align='flex-start'
+        align='center'
       >
-        <Text h3 inline>LoadingOverlay</Text>
-        <Flex row={bp.gteTablet} inline={bp.gteTablet}>
-          <Text muted inline={bp.gteTablet}>
+        <Text h3 inline={bp.gteTablet}>LoadingOverlay</Text>
+        <Flex
+          row
+          inline={bp.gteTablet}
+          justify={bp.gteTablet ? 'flex-end' : 'space-between'}
+        >
+          <Text muted inline>
             has the same props as Loading
           </Text>
           <Button
-            inline={bp.gteTablet}
+            inline
+            transparent
             title='Show overlay for 2s'
             onPress={toggleOverlay}
           />

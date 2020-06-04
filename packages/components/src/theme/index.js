@@ -1,14 +1,16 @@
 import React, {
-  createContext,
-  useContext,
-  useState,
+  useRef,
   useMemo,
-  useCallback,
+  useState,
   useEffect,
+  useContext,
+  useCallback,
+  createContext,
 } from 'react'
 import PropTypes from 'prop-types'
 import { Dimensions } from 'react-native'
 import merge from 'lodash/merge'
+import debounce from 'lodash/debounce'
 
 import {
   mergeStyles,
@@ -31,6 +33,7 @@ import { defaultTheme } from './defaultTheme'
 const ThemeContext = createContext()
 
 const defaultThemeName = 'default'
+const defaultDebounceInterval = 250
 
 const themeDefaultTemplate = {
   // default theme
@@ -63,6 +66,7 @@ export const ThemeProvider = props => {
     mixins = {},
   } = props
 
+  // theme and selected theme
   const [selectedTheme, setSelectedTheme] = useState(defaultThemeName)
   const [theme, setTheme] = useState(
     defaultThemeBuilder(
@@ -77,16 +81,24 @@ export const ThemeProvider = props => {
     ),
   )
 
+  // update theme
   const updateTheme = useCallback(update => {
     setTheme(theme => merge({}, theme, update))
   }, [setTheme])
+  // update theme debounced
+  const updateThemeDebounced = useRef(debounce(
+    update => updateTheme(update),
+    defaultDebounceInterval)
+  ).current
 
+  // on resize
   useEffect(() => {
-    const updateDimensions = r => updateTheme(buildScreen(r, breakPoints))
+    const updateDimensions = r => updateThemeDebounced(buildScreen(r, breakPoints))
     Dimensions.addEventListener('change', updateDimensions)
     return () => Dimensions.removeEventListener('change', updateDimensions)
-  }, [updateTheme])
+  }, [updateThemeDebounced])
 
+  // context creator a.k.a. theme parser
   const themeContext = useMemo(
     () => {
       const parsedTheme = themeParser(theme, selectedTheme)
