@@ -4,7 +4,15 @@ import { View, Text, ActivityIndicator } from 'react-native'
 
 import { useTheme } from '../../theme'
 
-const Loading = ({ noIcon, noText, vertical, inline, text, style }) => {
+const Loading = ({
+  noIcon,
+  noText,
+  vertical,
+  inline,
+  text,
+  style,
+  ...rest
+}) => {
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
   const finalStyle = useMemo(() => {
@@ -40,6 +48,7 @@ const Loading = ({ noIcon, noText, vertical, inline, text, style }) => {
         <ActivityIndicator
           size={finalStyle.icon.size}
           color={finalStyle.icon.color}
+          {...rest}
         />
       ) : null}
       {!noText ? (

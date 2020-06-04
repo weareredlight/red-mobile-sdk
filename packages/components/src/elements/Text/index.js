@@ -14,6 +14,7 @@ const Text = ({
   center,
   inline,
   children,
+  ...rest
 }) => {
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
@@ -57,7 +58,11 @@ const Text = ({
     small,
   ])
 
-  return <RNText style={finalStyle.text}>{children}</RNText>
+  return (
+    <RNText style={finalStyle.text} {...rest}>
+      {children}
+    </RNText>
+  )
 }
 
 Text.propTypes = {

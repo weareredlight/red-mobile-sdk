@@ -12,6 +12,7 @@ const Image = ({
   justify,
   resizeMode,
   style,
+  ...rest
 }) => {
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
@@ -95,7 +96,7 @@ const Image = ({
 
   return (
     <View onLayout={onLayout} style={finalStyle.wrapper}>
-      {size && <RNImage blurRadius={0} source={source} style={finalStyle.image} />}
+      {size && <RNImage source={source} style={finalStyle.image} {...rest} />}
     </View>
   )
 }

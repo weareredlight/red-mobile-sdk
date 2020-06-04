@@ -15,6 +15,7 @@ const Button = ({
   style,
   onPress,
   title,
+  ...rest
 }) => {
   const { mergeStyles, mergeWithComponentStyles } = useTheme()
 
@@ -64,6 +65,7 @@ const Button = ({
         onPress={onPress}
         disabled={disabled}
         style={finalStyle.button}
+        {...rest}
       >
         <Text style={finalStyle.text}>{title}</Text>
       </TouchableOpacity>
