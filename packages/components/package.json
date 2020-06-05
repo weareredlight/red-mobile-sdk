@@ -1,5 +1,5 @@
 {
-  "name": "@redlightsoftware/components",
+  "name": "@weareredlight/components",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.yarnpkg.com"
