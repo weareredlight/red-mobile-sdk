@@ -20,6 +20,8 @@
     "react",
     "react-native",
     "web",
+    "react-web",
+    "react-native-web",
     "components",
     "elements"
   ],

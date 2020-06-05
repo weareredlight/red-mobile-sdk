@@ -54,6 +54,7 @@ module.exports = {
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-native$': path.resolve(rootDir, 'node_modules/react-native-web'),
+      'prop-types$': path.resolve(rootDir, 'node_modules/axe-prop-types'),
       '@redlightsoftware/components': path.resolve(rootDir, '../packages/components'),
     },
   },
