@@ -10,7 +10,7 @@ import {
   Flex,
   Button,
   Text,
-} from '@redlightsoftware/components'
+} from '@weareredlight/components'
 
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes)

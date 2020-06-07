@@ -63,20 +63,44 @@ export const mergeWithComponentStyles = (theme, compName, compStyles, styles) =>
 }
 
 export const themeParser = (theme, selectedTheme) => {
-  const themeCopy = cloneDeep(theme)
+  const themeCopy = merge(
+    {},
+    {
+      // Things to keep from default theme
+      breakPoints: theme.breakPoints,
+      mixins: theme.mixins,
+      screen: theme.screen,
+      window: theme.window,
 
-  // STEP 1 - solve themes functions and parse targets
-  const solvedThemes = solveThemeFunctions(themeCopy, themeCopy.themes)
-  themeCopy.themes = solvedThemes
-  themeCopy.vars = solvedThemes[selectedTheme]
-  const parsedThemes = parseThemeDeep(themeCopy, solvedThemes)
+      // Placeholder stuff
+      themes: theme.defaultThemes,
+      components: theme.defaultComponents,
+    }
+  )
+
+  // STEP 1
+  // 1 - solve default themes functions
+  // 2 - solve user themes functions
+  // 3 - merge both styles
+  // 4 - parse styles
+  const solvedDefaultThemes = solveThemeFunctions(themeCopy, theme.defaultThemes)
+  themeCopy.themes = solvedDefaultThemes
+  const solvedUserThemes = solveThemeFunctions(themeCopy, theme.userThemes)
+  const mergedThemes = merge({}, solvedDefaultThemes, solvedUserThemes)
+  const parsedThemes = parseThemeDeep(themeCopy, mergedThemes)
   themeCopy.themes = parsedThemes
   themeCopy.vars = parsedThemes[selectedTheme]
 
-  // STEP 2 - solve components functions and parse targets
-  const solvedComponents = solveThemeFunctions(themeCopy, themeCopy.components)
-  themeCopy.components = solvedComponents
-  const parsedComponents = parseThemeDeep(themeCopy, solvedComponents)
+  // STEP 2
+  // 1 - solve default components functions
+  // 2 - solve user components functions
+  // 3 - merge both components
+  // 4 - parse components
+  const solvedDefaultComponents = solveThemeFunctions(themeCopy, theme.defaultComponents)
+  themeCopy.components = solvedDefaultComponents
+  const solvedUserComponents = solveThemeFunctions(themeCopy, theme.userComponents)
+  const mergedComponents = merge({}, solvedDefaultComponents, solvedUserComponents)
+  const parsedComponents = parseThemeDeep(themeCopy, mergedComponents)
   themeCopy.components = parsedComponents
 
   return themeCopy
@@ -154,7 +178,7 @@ We got a ${typeof value} instead. Please check your theme.`,
   return listCopy
 }
 
-export const defaultThemeBuilder = (
+export const themeBuilder = (
   themeDefaultTemplate,
   defaultThemeName,
   selectedTheme,
@@ -164,31 +188,6 @@ export const defaultThemeBuilder = (
   components,
   mixins,
 ) => {
-  // STEP 1 - merge variables and themes
-
-  // We need to merge all the themes IN THIS ORDER:
-  // 1 - default variables + themes = theme/defaultTheme.js
-  // 2 - variables = from <ThemeProvider variables />
-  // 3 - themes = from <ThemeProvider themes />
-
-  // Sadly, merge() doesnt merge __fun[]s across objects,
-  // so we call mergeObjectsAndFunctions() instead
-  const mergedThemes = mergeObjectsAndFunctions(
-    themeDefaultTemplate.themes, // 1
-    variables ? { [defaultThemeName]: variables } : {}, // 2
-    themes, // 3
-  )
-
-  // STEP 2 - merge components
-
-  // We need to merge all the components IN THIS ORDER:
-  // 1 - original components = theme/defaultTheme.js
-  // 2 - components = from <ThemeProvider components />
-  const mergedComponents = mergeObjectsAndFunctions(
-    themeDefaultTemplate.originalComponents, // 1
-    components, // 2
-  )
-
   return {
     ...buildScreen(
       {
@@ -197,9 +196,14 @@ export const defaultThemeBuilder = (
       },
       breakPoints,
     ),
-    vars: mergedThemes[selectedTheme],
-    themes: mergedThemes,
-    components: mergedComponents,
+    // vars: mergedThemes[selectedTheme],
+    defaultThemes: themeDefaultTemplate.themes,
+    userThemes: {
+      ...(variables ? { [defaultThemeName]: variables } : {}),
+      ...themes,
+    },
+    defaultComponents: themeDefaultTemplate.originalComponents,
+    userComponents: components,
     mixins: merge({}, themeDefaultTemplate.defaultMixins, mixins),
   }
 }
@@ -242,6 +246,7 @@ export const buildScreen = ({ window: w, screen: s }, breakPoints) => {
 const NOT_FOUND = '__NOT_FOUND__'
 const isValidObj = o => typeof o === 'object' && Object.keys(o).length > 0
 
+// eslint-disable-next-line no-unused-vars
 const mergeObjectsAndFunctions = (...objects) => {
   // Remove empty objects
   const validObjects = objects.filter(isValidObj)

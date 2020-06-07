@@ -6,7 +6,7 @@ import {
   Screen,
   Text,
   Flex,
-} from '@redlightsoftware/components'
+} from '@weareredlight/components'
 
 // Stories
 import TextStory from './stories/Text'

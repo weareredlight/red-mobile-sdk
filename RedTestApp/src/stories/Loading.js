@@ -1,7 +1,7 @@
 import React from 'react'
 import ComponentDetails from '../ComponentDetails'
 
-import { Loading } from '@redlightsoftware/components'
+import { Loading } from '@weareredlight/components'
 
 const TextStory = () => (
   <ComponentDetails

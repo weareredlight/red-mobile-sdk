@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styles from '../ComponentDetailsStyles'
-import { useTheme, Flex, Text, Button, LoadingOverlay } from '@redlightsoftware/components'
+import { useTheme, Flex, Text, Button, LoadingOverlay } from '@weareredlight/components'
 
 const LoadingOverlayStory = () => {
   const { theme: { breakPoints: bp } } = useTheme()

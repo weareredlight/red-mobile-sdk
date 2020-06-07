@@ -1,7 +1,7 @@
 import React from 'react'
 import ComponentDetails from '../ComponentDetails'
 
-import { Image } from '@redlightsoftware/components'
+import { Image } from '@weareredlight/components'
 
 // Example images
 import SquareCat from '../assets/images/square_cat.jpg'

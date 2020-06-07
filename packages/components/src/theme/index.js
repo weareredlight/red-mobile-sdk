@@ -17,7 +17,7 @@ import {
   mergeWithComponentStyles,
   buildScreen,
   themeParser,
-  defaultThemeBuilder,
+  themeBuilder,
 } from './utils'
 
 import {
@@ -42,7 +42,7 @@ export const ThemeProvider = props => {
   // theme and selected theme
   const [selectedTheme, setSelectedTheme] = useState(defaultThemeName)
   const [theme, setTheme] = useState(
-    defaultThemeBuilder(
+    themeBuilder(
       defaultThemeTemplate,
       defaultThemeName,
       selectedTheme,
