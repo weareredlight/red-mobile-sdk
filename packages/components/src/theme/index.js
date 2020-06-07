@@ -10,7 +10,7 @@ import React, {
 import PropTypes from 'prop-types'
 import { Dimensions } from 'react-native'
 import merge from 'lodash/merge'
-import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
 
 import {
   mergeStyles,
@@ -28,7 +28,7 @@ import {
 
 const ThemeContext = createContext()
 
-const defaultDebounceInterval = 250
+const defaultThrottleInterval = 100
 
 export const ThemeProvider = props => {
   const {
@@ -58,18 +58,18 @@ export const ThemeProvider = props => {
   const updateTheme = useCallback(update => {
     setTheme(theme => merge({}, theme, update))
   }, [setTheme])
-  // update theme debounced
-  const updateThemeDebounced = useRef(debounce(
+  // update theme throttled
+  const updateThemeThrottled = useRef(throttle(
     update => updateTheme(update),
-    defaultDebounceInterval)
+    defaultThrottleInterval)
   ).current
 
   // on resize
   useEffect(() => {
-    const updateDimensions = r => updateThemeDebounced(buildScreen(r, breakPoints))
+    const updateDimensions = r => updateThemeThrottled(buildScreen(r, breakPoints))
     Dimensions.addEventListener('change', updateDimensions)
     return () => Dimensions.removeEventListener('change', updateDimensions)
-  }, [updateThemeDebounced])
+  }, [updateThemeThrottled])
 
   // context creator a.k.a. theme parser
   const themeContext = useMemo(
