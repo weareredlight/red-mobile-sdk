@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TextInput } from 'react-native'
 
 import {
@@ -8,6 +8,8 @@ import {
   Flex,
 } from '@weareredlight/components'
 
+import { withPermission } from '@weareredlight/utils'
+
 // Stories
 import TextStory from './stories/Text'
 import ImageStory from './stories/Image'
@@ -16,6 +18,17 @@ import LoadingStory from './stories/Loading'
 import LoadingOverlayStory from './stories/LoadingOverlay'
 
 const App = () => {
+  useEffect(() => {
+    (async () => {
+      withPermission(
+        'CAMERA',
+        'take a pic',
+        () => console.log('success'),
+        () => console.log('denied'),
+      )
+    })();
+  }, [])
+
   return (
     <ThemeProvider>
       <Screen scroll>

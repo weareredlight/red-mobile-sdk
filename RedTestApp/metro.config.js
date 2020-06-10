@@ -19,7 +19,7 @@ module.exports = {
             return target[name]
           }
           if (name.startsWith('prop-types')) {
-            return path.join(process.cwd(), `node_modules/axe-prop-types`)
+            return path.join(process.cwd(), 'node_modules/axe-prop-types')
           }
           return path.join(process.cwd(), `node_modules/${name}`)
         },

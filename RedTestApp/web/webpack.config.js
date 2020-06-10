@@ -55,7 +55,7 @@ module.exports = {
       react: path.resolve('./node_modules/react'),
       'react-native$': path.resolve(rootDir, 'node_modules/react-native-web'),
       'prop-types$': path.resolve(rootDir, 'node_modules/axe-prop-types'),
-      '@weareredlight/components': path.resolve(rootDir, '../packages/components'),
+      '@weareredlight/$': path.resolve(rootDir, '../packages/$'),
     },
   },
   devServer: {

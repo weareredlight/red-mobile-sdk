@@ -19,6 +19,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "0.62.2",
+    "react-native-permissions": "^2.1.5",
     "react-native-web": "0.12.2"
   },
   "devDependencies": {

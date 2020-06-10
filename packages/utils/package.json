@@ -1,0 +1,41 @@
+{
+  "name": "@weareredlight/utils",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "prop-types": ">= 15.7.2 < 16",
+    "react": ">=16.13.1 < 17",
+    "react-native": ">= 0.62 < 0.70",
+    "react-native-permissions": "^2.1.5"
+  },
+  "description": "> TODO: description",
+  "keywords": [
+    "react",
+    "react-native",
+    "web",
+    "react-web",
+    "react-native-web",
+    "utils",
+    "permissions"
+  ],
+  "author": "Samuel Nunes <samuelmn@redlightsoft.com>",
+  "homepage": "https://github.com/weareredlight/red-mobile-sdk",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weareredlight/red-mobile-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weareredlight/red-mobile-sdk/issues"
+  }
+}
