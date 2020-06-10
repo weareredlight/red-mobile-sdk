@@ -4,7 +4,7 @@
     "access": "public",
     "registry": "https://registry.yarnpkg.com"
   },
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "peerDependencies": {
     "prop-types": ">= 15.7.2 < 16",
