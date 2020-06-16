@@ -8,7 +8,7 @@ const Flex = ({
   children,
   flex,
   row,
-  noWrap,
+  wrap,
   align,
   justify,
   style,
@@ -31,8 +31,8 @@ const Flex = ({
     if (row) {
       s[0].flex.flexDirection = 'row'
     }
-    if (noWrap) {
-      s[0].flex.flexWrap = 'nowrap'
+    if (wrap) {
+      s[0].flex.flexWrap = wrap
     }
     if (align) {
       s[0].flex.alignItems = align
@@ -45,7 +45,7 @@ const Flex = ({
     }
 
     return mergeStyles(s)
-  }, [mergeWithComponentStyles, mergeStyles, flex, row, noWrap, align, justify])
+  }, [mergeWithComponentStyles, mergeStyles, flex, row, wrap, align, justify])
 
   return (
     <View style={finalStyle.flex} {...rest}>
@@ -59,7 +59,7 @@ Flex.propTypes = {
   scroll: PropTypes.bool,
   flex: PropTypes.number,
   row: PropTypes.bool,
-  noWrap: PropTypes.bool,
+  wrap: PropTypes.string,
   debug: PropTypes.bool,
   inline: PropTypes.bool,
   align: PropTypes.string,

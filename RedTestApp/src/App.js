@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { TextInput } from 'react-native'
+import { TextInput, View } from 'react-native'
 
 import {
   ThemeProvider,
@@ -18,16 +18,16 @@ import LoadingStory from './stories/Loading'
 import LoadingOverlayStory from './stories/LoadingOverlay'
 
 const App = () => {
-  useEffect(() => {
-    (async () => {
-      withPermission(
-        'CAMERA',
-        'take a pic',
-        () => console.log('success'),
-        () => console.log('denied'),
-      )
-    })();
-  }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //     withPermission(
+  //       'CAMERA',
+  //       'take a pic',
+  //       () => console.log('success'),
+  //       () => console.log('denied'),
+  //     )
+  //   })();
+  // }, [])
 
   return (
     <ThemeProvider>
