@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import set from 'lodash/set'
 import merge from 'lodash/merge'
 import { default as objFlatten } from 'obj-flatten'
-import styles from './ComponentDetailsStyles'
-
 import {
   useTheme,
   Flex,
   Button,
   Text,
 } from '@weareredlight/components'
+
+import styles from './ComponentDetailsStyles'
 
 const getComponentPropTypes = ({ propTypes }) =>
   Object.keys(propTypes)

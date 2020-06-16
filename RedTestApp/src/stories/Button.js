@@ -1,7 +1,7 @@
 import React from 'react'
-import ComponentDetails from '../ComponentDetails'
-
 import { Button } from '@weareredlight/components'
+
+import ComponentDetails from '../ComponentDetails'
 
 const ButtonStory = () => (
   <ComponentDetails

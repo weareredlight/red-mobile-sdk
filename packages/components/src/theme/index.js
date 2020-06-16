@@ -69,7 +69,7 @@ export const ThemeProvider = props => {
     const updateDimensions = r => updateThemeThrottled(buildScreen(r, breakPoints))
     Dimensions.addEventListener('change', updateDimensions)
     return () => Dimensions.removeEventListener('change', updateDimensions)
-  }, [updateThemeThrottled])
+  }, [updateThemeThrottled, breakPoints])
 
   // context creator a.k.a. theme parser
   const themeContext = useMemo(
@@ -109,7 +109,7 @@ export const ThemeProvider = props => {
           updateTheme({ themes: { [(themeName || defaultThemeName)]: { [varName]: val } } }),
       }
     },
-    [theme, selectedTheme],
+    [theme, selectedTheme, updateTheme],
   )
 
   return <ThemeContext.Provider value={themeContext} {...props} />

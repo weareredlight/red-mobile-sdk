@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
-import { TextInput, View } from 'react-native'
-
+import React from 'react'
+import { TextInput } from 'react-native'
 import {
   ThemeProvider,
   Screen,
   Text,
   Flex,
 } from '@weareredlight/components'
-
-import { withPermission } from '@weareredlight/utils'
+// import { withPermission } from '@weareredlight/utils'
 
 // Stories
 import TextStory from './stories/Text'

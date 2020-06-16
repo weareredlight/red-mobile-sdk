@@ -21,7 +21,7 @@ const Screen = ({
   const finalStyle = useMemo(() => {
     const compTheme = mergeWithComponentStyles('Screen', style)
     return mergeStyles([compTheme.default])
-  }, [mergeWithComponentStyles, mergeStyles])
+  }, [mergeWithComponentStyles, mergeStyles, style])
 
   const [First, Second] = useMemo(() => {
     if (scroll) {

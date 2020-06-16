@@ -10,7 +10,7 @@ const Screen = ({ children, style, ...rest }) => {
   const finalStyle = useMemo(() => {
     const compTheme = mergeWithComponentStyles('Screen', style)
     return mergeStyles([compTheme.default])
-  }, [mergeWithComponentStyles, mergeStyles])
+  }, [mergeWithComponentStyles, mergeStyles, style])
 
   return (
     <SafeAreaView style={finalStyle.safeArea} {...rest}>

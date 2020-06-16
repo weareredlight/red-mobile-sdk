@@ -40,6 +40,7 @@ const Loading = ({
     noText,
     noIcon,
     vertical,
+    style,
   ])
 
   return (

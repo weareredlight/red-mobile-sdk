@@ -45,7 +45,18 @@ const Flex = ({
     }
 
     return mergeStyles(s)
-  }, [mergeWithComponentStyles, mergeStyles, flex, row, wrap, align, justify])
+  }, [
+    mergeWithComponentStyles,
+    mergeStyles,
+    flex,
+    row,
+    wrap,
+    align,
+    justify,
+    debug,
+    inline,
+    style,
+  ])
 
   return (
     <View style={finalStyle.flex} {...rest}>

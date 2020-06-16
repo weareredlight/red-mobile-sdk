@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
-import styles from '../ComponentDetailsStyles'
 import { useTheme, Flex, Text, Button, LoadingOverlay } from '@weareredlight/components'
+
+import styles from '../ComponentDetailsStyles'
 
 const LoadingOverlayStory = () => {
   const { theme: { breakPoints: bp } } = useTheme()
@@ -11,7 +12,7 @@ const LoadingOverlayStory = () => {
     setTimeout(() => {
       setShowOverlay(false)
     }, 2000)
-  })
+  }, [setShowOverlay])
 
   return (
     <Flex style={styles.container}>

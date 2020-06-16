@@ -54,6 +54,7 @@ const Image = ({
     align,
     justify,
     resizeMode,
+    style,
   ])
 
   const onLayout = ({ nativeEvent }) => {
@@ -92,7 +93,7 @@ const Image = ({
     } else {
       setSize({ height: wrapperData.height, width: wrapperData.width })
     }
-  }, [wrapperData, imageData, setSize])
+  }, [wrapperData, imageData, setSize, resizeMode])
 
   return (
     <View onLayout={onLayout} style={finalStyle.wrapper}>
