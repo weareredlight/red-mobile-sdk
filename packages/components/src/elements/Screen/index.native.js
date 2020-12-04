@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
   SafeAreaView,
   View,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native'
@@ -12,7 +11,6 @@ import { useTheme } from '../../theme'
 
 const Screen = ({
   children,
-  scroll,
   style,
   ...rest
 }) => {
@@ -23,25 +21,18 @@ const Screen = ({
     return mergeStyles([compTheme.default])
   }, [mergeWithComponentStyles, mergeStyles, style])
 
-  const [First, Second] = useMemo(() => {
-    if (scroll) {
-      return [KeyboardAvoidingView, ScrollView]
-    }
-    return [View, View]
-  }, [scroll])
-
   return (
     <SafeAreaView style={finalStyle.safeArea}>
       {Platform.OS === 'android' ? (
-        <Second style={finalStyle.wrapper} {...rest}>
+        <View style={finalStyle.wrapper} {...rest}>
           {children}
-        </Second>
+        </View>
       ) : ( // ios
-        <First behavior='padding'>
-          <Second style={finalStyle.wrapper} {...rest}>
+        <KeyboardAvoidingView behavior='padding'>
+          <View style={finalStyle.wrapper} {...rest}>
             {children}
-          </Second>
-        </First>
+          </View>
+        </KeyboardAvoidingView>
       )}
     </SafeAreaView>
   )
@@ -49,7 +40,6 @@ const Screen = ({
 
 Screen.propTypes = {
   children: PropTypes.any.isRequired,
-  scroll: PropTypes.bool,
   style: PropTypes.shape()
 }
 

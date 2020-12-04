@@ -4,7 +4,7 @@ export const ScreenStyle = {
       width: '100%',
       minHeight: '100%',
       __web: {
-        minHeight: '100vh',
+        height: '100vh',
       },
       __fun: [({ vars }) => ({
         backgroundColor: vars.colors.background

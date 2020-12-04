@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from 'react-native'
+import { ScrollView, TextInput } from 'react-native'
 import {
   ThemeProvider,
   Screen,
@@ -11,6 +11,7 @@ import {
 // Stories
 import TextStory from './stories/Text'
 import ImageStory from './stories/Image'
+import ModalStory from './stories/Modal'
 import ButtonStory from './stories/Button'
 import LoadingStory from './stories/Loading'
 import LoadingOverlayStory from './stories/LoadingOverlay'
@@ -29,26 +30,29 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <Screen scroll>
-        <Flex style={headerStyles}>
-          <Text h1>🔴 RedTestApp 🔴</Text>
-          <Text>
-            This app mirrors all the components made available by
-            red-mobile-sdk/components
-          </Text>
-          <Text>
-            Please keep this app updated 🙏
-          </Text>
-        </Flex>
+      <Screen>
+        <ScrollView>
+          <Flex style={headerStyles}>
+            <Text h1>🔴 RedTestApp 🔴</Text>
+            <Text>
+              This app mirrors all the components made available by
+              red-mobile-sdk/components
+            </Text>
+            <Text>
+              Please keep this app updated 🙏
+            </Text>
+          </Flex>
 
-        {/* List all stories */}
-        <ImageStory />
-        <TextStory />
-        <ButtonStory />
-        <LoadingStory />
-        <LoadingOverlayStory />
+          {/* List all stories */}
+          <ImageStory />
+          <TextStory />
+          <ButtonStory />
+          <LoadingStory />
+          <LoadingOverlayStory />
+          <ModalStory />
 
-        <TextInput />
+          <TextInput />
+        </ScrollView>
       </Screen>
     </ThemeProvider>
   )

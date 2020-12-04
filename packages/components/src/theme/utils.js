@@ -43,7 +43,7 @@ const allTargets = {
 
 export const mergeStyles = stylesList => merge({}, ...stylesList)
 
-export const mergeWithComponentStyles = (theme, compName, compStyles, styles) => {
+export const mergeWithComponentStyles = (theme, compName, compStyles = {}, styles = {}) => {
   // STEP 1 - check if the user injected styles has functions in it
   // we know compStyles doesn't have any because we solved them in themeParser()
   const flattenUserStyles = objFlatten(styles)

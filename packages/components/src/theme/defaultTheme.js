@@ -1,9 +1,9 @@
 // Component Themes
-import { LoadingOverlayStyle } from '../elements/LoadingOverlay/style'
 import { LoadingStyle } from '../elements/Loading/style'
 import { ScreenStyle } from '../elements/Screen/style'
 import { ButtonStyle } from '../elements/Button/style'
 import { ImageStyle } from '../elements/Image/style'
+import { ModalStyle } from '../elements/Modal/style'
 import { TextStyle } from '../elements/Text/style'
 import { FlexStyle } from '../elements/Flex/style'
 
@@ -13,11 +13,11 @@ export const defaultBreakPoints = [550, 750, 1000, 1400]
 export const defaultThemeTemplate = {
   // default components
   originalComponents: {
-    LoadingOverlay: LoadingOverlayStyle,
     Loading: LoadingStyle,
     Screen: ScreenStyle,
     Button: ButtonStyle,
     Image: ImageStyle,
+    Modal: ModalStyle,
     Text: TextStyle,
     Flex: FlexStyle,
   },
