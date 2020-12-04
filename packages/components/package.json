@@ -4,7 +4,7 @@
     "access": "public",
     "registry": "https://registry.yarnpkg.com"
   },
-  "version": "0.1.12",
+  "version": "0.1.13",
   "main": "lib/index.js",
   "dependencies": {
     "lodash": "^4.17.15",
@@ -13,8 +13,8 @@
   "peerDependencies": {
     "prop-types": ">= 15.7.2 < 16",
     "react": ">=16.13.1 < 17",
-    "react-native": ">= 0.62 < 0.70",
-    "react-dom": ">=16.13.1 < 17"
+    "react-dom": ">=16.13.1 < 17",
+    "react-native": ">= 0.62 < 0.70"
   },
   "description": "> TODO: description",
   "keywords": [
