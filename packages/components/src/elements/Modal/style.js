@@ -8,15 +8,16 @@ export const ModalStyle = {
       alignItems: 'center',
       justifyContent: 'center',
       position: 'absolute',
-      width: '0%',
-      height: '0%',
+      width: '100%',
+      height: '100%',
       __web: {
         position: 'fixed',
         opacity: 0,
-        transitionProperty: 'opacity, width, height',
-        transitionDuration: `${animationDuration}s, ${animationTick}s, ${animationTick}s`,
-        transitionTimingFunction: 'ease, linear, linear',
-        transitionDelay: `0s, ${animationDuration - animationTick}s, ${animationDuration - animationTick}s`,
+        visibility: 'hidden',
+        transitionProperty: 'opacity, visibility',
+        transitionDuration: `${animationDuration}s, ${animationTick}s`,
+        transitionTimingFunction: 'ease, linear',
+        transitionDelay: `0s, ${animationDuration - animationTick}s`,
       },
       top: 0,
       left: 0,
@@ -25,13 +26,12 @@ export const ModalStyle = {
   },
   visible: {
     wrapper: {
-      width: '100%',
-      height: '100%',
       __web: {
         opacity: 1,
-        transitionProperty: 'opacity, width, height',
-        transitionDuration: `${animationDuration}s, ${animationTick}s, ${animationTick}s`,
-        transitionTimingFunction: 'ease, linear, linear',
+        visibility: 'visible',
+        transitionProperty: 'opacity, visibility',
+        transitionDuration: `${animationDuration}s, ${animationTick}s`,
+        transitionTimingFunction: 'ease, linear',
         transitionDelay: '',
       }
     }
